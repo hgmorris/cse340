@@ -4,3 +4,245 @@
 *:after {
   box-sizing: border-box;
 }
+
+/* *********** Body Styles ************** */
+/* CSS */
+
+/* Mobile-first styles */
+/* CSS */
+
+body {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  background-color: #f5f5f5;
+}
+
+.container {
+  color: #333;
+  background-color: #fff;
+}
+
+/* Style for larger screens */
+@media (min-width: 768px) {
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .container {
+    width: 80%;
+    margin: auto;
+  }
+}
+
+/* Style for mobile screens */
+@media (max-width: 767px) {
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .container {
+    width: 100%;
+    padding: 20px;
+  }
+}
+
+/******* form And Login styling
+
+***************/
+
+/* Styling the login title */
+.login-title {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Styling the form box */
+.form-box {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Styling the form element*/
+.form-control {
+  width: 100%;
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.fname,
+.lname,
+.email,
+.password {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form input[type='submit'] {
+  width: 100%;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+
+.form-btn {
+  background-color: #5e5def;
+  margin-top: 25px; 
+  padding: 10px 25px; 
+  border: none;
+  font-size: 1.2rem; 
+  transition: background-color 0.3s, color 0.3s; 
+}
+
+.form-btn:hover {
+  background-color: #3b3be5; 
+  color: white;
+}
+
+/* Styling the register section */
+.register {
+  padding-top: 30px; 
+  font-size: 1.1em; 
+  justify-content: center; 
+}
+
+.register a {
+  text-decoration: none; 
+  color: #5e5def; 
+  transition: color 0.3s; 
+}
+
+.register a:hover {
+  color: #3b3be5; 
+}
+
+@media screen and (min-width: 768px) {
+
+  :root {
+    background-image: url('../images/site/small_check.jpg');
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-position: center center;
+  }
+
+  body {
+    font-size: 18px;
+    background-color: white;  
+    padding: 5%;
+    border: 8px solid #6B0504;;
+   
+  }
+
+#welcome {
+  margin-top: 5%;
+}
+
+.car-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+  #delo { 
+    background-image: url('../images/site/delo.jpg');
+    background-size: 30vw auto;
+    background-repeat: no-repeat; 
+    background-position: 45% 50%;
+    margin:10% auto ;
+  }
+  
+  .the_delo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin:10% auto ;
+    gap: 25px;
+  }
+
+  #delorean_upg {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+
+  #delorean_upg h3 {
+    margin-bottom: 0;
+  }
+
+  .reviews {
+    grid-column: 2/3;
+  }
+
+  .reviews h3 {
+    padding-bottom: 25px;
+  }
+
+  .vehicle-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+  }
+
+}
+
+.car-grid img {
+  
+  height: auto;
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+
+.car_img a :hover {
+  transition: transform .5s;
+  opacity: .8;
+  transform: scale(1.1);
+}
+
+#tools a:hover{
+  color: #6B0504;
+  opacity: .7;
+  transform: scale(1.5);
+}
+
+.namePrice {
+  margin-top: 10px;
+}
+
+
+.vehicle-content img {
+  width: 100%;
+}
+
+.error_background { 
+  background-image: url('../images/site/error.jpg'); 
+  background-size: contain;
+  background-repeat: no-repeat; 
+  background-position: right;
+}
