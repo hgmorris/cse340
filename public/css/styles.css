@@ -38,7 +38,7 @@ h1, h2, h3, h4, h5, h6 {
 .siteName {
   justify-self: start;
   font-weight: bolder;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .siteName a, #tools a {
@@ -70,17 +70,16 @@ nav ul, nav ul li a {
   font-weight: bolder;
   text-decoration: none;
   font-size: 1.2rem;
-  padding: 10px;
+  padding: 5px;
 }
 
 nav ul li a {
-  margin-right: 10px; 
-  transition: color 0.5s; 
+  margin-right: 10px;
+  transition: color 0.5s;
+}
 
-  /* Hover styles */
-  &:hover {
-    color: #4cc9f0;
-  }
+nav ul li a:hover {
+  color: #4cc9f0;
 }
 
 #welcome {
@@ -111,7 +110,7 @@ nav ul li a {
 }
 
 #own_t {
-  background-color: #00F5C0;
+  background-color: #4CC9F0;
   width: 10em;
   font-weight: bolder;
   padding: 1em 0em;
@@ -138,7 +137,7 @@ nav ul li a {
 
 .upgrades-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); 
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 }
 
@@ -147,58 +146,35 @@ nav ul li a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #007bff; 
-  /* padding: 28px; */
+  background-color: #4CC9F0;
   margin-bottom: 20px;
   border-radius: 5px;
   color: white;
-  position: relative; 
+  position: relative;
   height: 125px;
 }
+
 .upgrade-image {
   width: 80%;
   height: 80%;
   object-fit: contain;
   margin-bottom: 10px;
 }
+
 .upgrade-name {
   text-align: center;
-  color: #007bff; 
-  position: absolute; 
-  bottom: -27px; 
+  color: #4CC9F0;
+  position: absolute;
+  bottom: -27px;
   padding: 5px;
   border-radius: 5px;
-  text-decoration: none; 
+  text-decoration: none;
 }
+
 .upgrade-name:hover {
-  text-decoration: underline; 
-  color: #0056b3; 
+  text-decoration: underline;
+  color: #4c52f0;
 }
-/* .bg {
-  background-color: #4cc9f0;
-  margin-right: auto;
-  margin-left: auto;
-  padding: 5%;
-  align-self: center;
-  height: 100px;
-  width: 100px;
-}
-
-#delorean_upg h3 {
-  grid-column: 1/3;
-}
-
-.upg_link {
-  text-decoration: none; 
-  color: #4cc9f0; 
-
-  /* Hover styles */
-  /* &:hover {
-    color: #00F5C0; 
-    text-decoration: underline; 
-  }
-/* } */ 
-
 
 /* Media Query for screens with minimum width 768px */
 @media screen and (min-width: 768px) {
@@ -217,7 +193,7 @@ nav ul li a {
   }
 
   #welcome {
-    margin-top: 5%;
+    margin-top: 20px;
   }
 
   .car-grid {
@@ -247,11 +223,10 @@ nav ul li a {
     padding-left: 10px;
     background-color: rgba(0, 255, 187, 0.1);
     margin-right: 60%;
-    text-decoration: #4cc9f0;
   }
 
   #own_t {
-    background-color: #4cc9f0;
+    background-color: #4CC9F0;
     width: 10em;
     font-weight: bolder;
     padding: 1em 0em;
@@ -267,6 +242,7 @@ nav ul li a {
 
   .reviews h3 {
     text-align: left;
+    padding-bottom: 25px;
   }
 
   #delorean_upg {
@@ -278,63 +254,20 @@ nav ul li a {
 
   .upgrades-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); 
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
-  
+
   .upgrade {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #4cc9f0; 
-    /* padding: 28px; */
-    margin-bottom: 20px;
-    border-radius: 5px;
-    color: white;
-    position: relative; 
     height: 100px;
     width: 200px;
   }
-  .upgrade-image {
-    width: 80%;
-    height: 80%;
-    object-fit: contain;
-    margin-bottom: 10px;
-  }
+
   .upgrade-name {
-    text-align: center;
-    color: #3A86FF; 
-    position: absolute; 
-    bottom: -27px; 
-    padding: 5px;
-    border-radius: 5px;
-    text-decoration: none; 
-    text-underline-position: below;
-  }
-  .upgrade-name:hover {
-    text-decoration: underline; 
-    color: #0056b3; 
+    bottom: -27px;
   }
 
-  
   #delorean_upg h3 {
     margin-bottom: 20px;
-  }
-
-  .reviews {
-    grid-column: 2/3;
-  }
-
-  .reviews h3 {
-    padding-bottom: 25px;
-  }
-
-  .vehicle-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5px;
-    justify-content: center;
-    align-items: center;
   }
 }
