@@ -1,197 +1,325 @@
-/******* Change Box Model ***************/
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Open+Sans&display=swap');
+
+/* Change Box Model */
 *,
 *:before,
 *:after {
   box-sizing: border-box;
 }
 
-/* *********** Body Styles ************** */
-/* CSS */
-
+/* Body Styles */
 /* Mobile-first styles */
-/* CSS */
-
 body {
-  font-family: 'Roboto', sans-serif;
-  color: #333;
-  background-color: #f5f5f5;
+  font-family: "Open Sans", monospace, sans-serif;
+  max-width: 1200px;
+  margin: 10%;
 }
 
-.container {
-  color: #333;
-  background-color: #fff;
+p {
+  color: black;
 }
 
-/* Style for larger screens */
-@media (min-width: 768px) {
-  body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-
-  .container {
-    width: 80%;
-    margin: auto;
-  }
-}
-
-/* Style for mobile screens */
-@media (max-width: 767px) {
-  body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-
-  .container {
-    width: 100%;
-    padding: 20px;
-  }
-}
-
-/******* form And Login styling
-
-***************/
-
-/* Styling the login title */
-.login-title {
-  margin: 0;
-  padding: 0;
+.content {
+  margin: 0 auto;
   text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Lato, monospace, sans-serif;
+  font-weight: bolder;
+}
+
+#top-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-content: center;
+}
+
+.siteName {
+  justify-self: start;
+  font-weight: bolder;
   font-size: 2rem;
-  font-weight: 300;
-  text-transform: uppercase;
-  letter-spacing: 2px;
 }
 
-/* Styling the form box */
-.form-box {
-  margin-top: 20px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.siteName a, #tools a {
+  text-decoration: none;
+  color: black;
+  transition: transform 0.5s, color 0.5s, opacity 0.5s;
 }
 
-/* Styling the form element*/
-.form-control {
-  width: 100%;
-  height: 40px;
-  padding: 0 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-bottom: 10px;
+.siteName a:hover, #tools a:hover {
+  color: #4cc9f0;
+  opacity: .7;
+  transform: scale(1.5);
 }
 
-.fname,
-.lname,
-.email,
-.password {
+#tools {
+  justify-self: end;
+  font-weight: bolder;
+  align-self: center;
+}
+
+nav ul, nav ul li a {
   display: flex;
-  justify-content: space-between;
+  list-style: none;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: black;
+  height: 3rem;
+  color: white;
+  font-weight: bolder;
+  text-decoration: none;
+  font-size: 1.2rem;
+  padding: 10px;
 }
 
-.form input[type='submit'] {
-  width: 100%;
-  height: 40px;
-  border: none;
-  border-radius: 5px;
-  background-color: #333;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 300;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+nav ul li a {
+  margin-right: 10px; 
+  transition: color 0.5s; 
+
+  /* Hover styles */
+  &:hover {
+    color: #4cc9f0;
+  }
+}
+
+#welcome {
+  text-align: left;
+  line-height: 1.2;
+  letter-spacing: 1.5px;
+  word-spacing: 10px;
+  font-size: 1.5rem;
+}
+
+#delo {
+  background-image: url('../images/vehicles/delorean.jpg');
+  background-size: 57vw auto;
+  background-repeat: no-repeat;
+  background-position: right;
+}
+
+#DMC {
+  text-align: left;
+  padding-left: 10px;
+  background-color: rgba(0, 255, 187, 0.1);
+  margin-right: 30%;
+}
+
+#DMC p {
+  line-height: 1.5rem;
+  font-weight: bold;
+}
+
+#own_t {
+  background-color: #00F5C0;
+  width: 10em;
+  font-weight: bolder;
+  padding: 1em 0em;
+  border-radius: 1.5em;
   cursor: pointer;
 }
 
-.form-btn {
-  background-color: #5e5def;
-  margin-top: 25px; 
-  padding: 10px 25px; 
-  border: none;
-  font-size: 1.2rem; 
-  transition: background-color 0.3s, color 0.3s; 
+#DMC_reviews {
+  text-align: left;
+  padding-left: 4%;
+  line-height: 32px;
 }
 
-.form-btn:hover {
-  background-color: #3b3be5; 
+.reviews h3 {
+  text-align: left;
+}
+
+#delorean_upg {
+  text-align: left;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+
+.upgrades-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 10px;
+}
+
+.upgrade {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #007bff; 
+  /* padding: 28px; */
+  margin-bottom: 20px;
+  border-radius: 5px;
   color: white;
+  position: relative; 
+  height: 125px;
 }
-
-/* Styling the register section */
-.register {
-  padding-top: 30px; 
-  font-size: 1.1em; 
-  justify-content: center; 
+.upgrade-image {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  margin-bottom: 10px;
 }
-
-.register a {
+.upgrade-name {
+  text-align: center;
+  color: #007bff; 
+  position: absolute; 
+  bottom: -27px; 
+  padding: 5px;
+  border-radius: 5px;
   text-decoration: none; 
-  color: #5e5def; 
-  transition: color 0.3s; 
+}
+.upgrade-name:hover {
+  text-decoration: underline; 
+  color: #0056b3; 
+}
+/* .bg {
+  background-color: #4cc9f0;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 5%;
+  align-self: center;
+  height: 100px;
+  width: 100px;
 }
 
-.register a:hover {
-  color: #3b3be5; 
+#delorean_upg h3 {
+  grid-column: 1/3;
 }
 
+.upg_link {
+  text-decoration: none; 
+  color: #4cc9f0; 
+
+  /* Hover styles */
+  /* &:hover {
+    color: #00F5C0; 
+    text-decoration: underline; 
+  }
+/* } */ 
+
+
+/* Media Query for screens with minimum width 768px */
 @media screen and (min-width: 768px) {
-
   :root {
-    background-image: url('../images/site/small_check.jpg');
-    background-size: cover; 
-    background-repeat: no-repeat; 
+    background-image: url('../images/site/small_check.png');
+    background-size: cover;
+    background-repeat: no-repeat;
     background-position: center center;
   }
 
   body {
     font-size: 18px;
-    background-color: white;  
+    background-color: white;
     padding: 5%;
-    border: 8px solid #6B0504;;
-   
+    border: 8px solid #4cc9f0;
   }
 
-#welcome {
-  margin-top: 5%;
-}
-
-.car-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-  #delo { 
-    background-image: url('../images/site/delo.jpg');
-    background-size: 30vw auto;
-    background-repeat: no-repeat; 
-    background-position: 45% 50%;
-    margin:10% auto ;
+  #welcome {
+    margin-top: 5%;
   }
-  
-  .the_delo {
+
+  .car-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    margin:10% auto ;
+    gap: 5px;
+  }
+
+  #delo {
+    background-image: url('../images/vehicles/delorean.jpg');
+    background-size: 30vw auto;
+    background-repeat: no-repeat;
+    background-position: 45% 50%;
+    margin: 10% auto;
+  }
+
+  .the_delo {
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 10% auto;
     gap: 25px;
+    justify-content: space-between;
+  }
+
+  #DMC {
+    text-align: left;
+    padding-left: 10px;
+    background-color: rgba(0, 255, 187, 0.1);
+    margin-right: 60%;
+    text-decoration: #4cc9f0;
+  }
+
+  #own_t {
+    background-color: #4cc9f0;
+    width: 10em;
+    font-weight: bolder;
+    padding: 1em 0em;
+    border-radius: 1.5em;
+    cursor: pointer;
+  }
+
+  #DMC_reviews {
+    text-align: left;
+    padding-left: 4%;
+    line-height: 32px;
+  }
+
+  .reviews h3 {
+    text-align: left;
   }
 
   #delorean_upg {
-    grid-column: 1/2;
-    grid-row: 1/2;
+    text-align: left;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
   }
 
+  .upgrades-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 10px;
+  }
+  
+  .upgrade {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #4cc9f0; 
+    /* padding: 28px; */
+    margin-bottom: 20px;
+    border-radius: 5px;
+    color: white;
+    position: relative; 
+    height: 100px;
+    width: 200px;
+  }
+  .upgrade-image {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+    margin-bottom: 10px;
+  }
+  .upgrade-name {
+    text-align: center;
+    color: #3A86FF; 
+    position: absolute; 
+    bottom: -27px; 
+    padding: 5px;
+    border-radius: 5px;
+    text-decoration: none; 
+    text-underline-position: below;
+  }
+  .upgrade-name:hover {
+    text-decoration: underline; 
+    color: #0056b3; 
+  }
+
+  
   #delorean_upg h3 {
-    margin-bottom: 0;
+    margin-bottom: 20px;
   }
 
   .reviews {
@@ -205,44 +333,8 @@ body {
   .vehicle-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 5px;
     justify-content: center;
     align-items: center;
   }
-
-}
-
-.car-grid img {
-  
-  height: auto;
-  transition: transform 0.3s;
-  cursor: pointer;
-}
-
-.car_img a :hover {
-  transition: transform .5s;
-  opacity: .8;
-  transform: scale(1.1);
-}
-
-#tools a:hover{
-  color: #6B0504;
-  opacity: .7;
-  transform: scale(1.5);
-}
-
-.namePrice {
-  margin-top: 10px;
-}
-
-
-.vehicle-content img {
-  width: 100%;
-}
-
-.error_background { 
-  background-image: url('../images/site/error.jpg'); 
-  background-size: contain;
-  background-repeat: no-repeat; 
-  background-position: right;
 }
