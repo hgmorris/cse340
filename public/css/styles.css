@@ -271,3 +271,44 @@ nav ul li a:hover {
     margin-bottom: 20px;
   }
 }
+
+.upgrades-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.upgrade {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #4CC9F0;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  color: white;
+  position: relative;
+  height: 125px;
+}
+
+.upgrade-image {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.upgrade-name {
+  text-align: center;
+  color: #4CC9F0;
+  position: absolute;
+  bottom: -27px;
+  padding: 5px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.upgrade-name:hover {
+  text-decoration: underline;
+  color: #4c52f0;
+}
