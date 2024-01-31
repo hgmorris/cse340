@@ -173,7 +173,7 @@ nav ul li a:hover {
 
 .upgrade-name:hover {
   text-decoration: underline;
-  color: #4c52f0;
+  color: black;
 }
 
 /* Media Query for screens with minimum width 768px */
