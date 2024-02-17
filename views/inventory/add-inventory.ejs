@@ -1,0 +1,103 @@
+<!-- Content Heading -->
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+
+<!-- Display Messages -->
+<%- messages()  %>
+
+<!-- Add-Inventory Error Display -->
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+<% } %>
+
+<!-- Add-Inventory Form -->
+<div class="form-box">
+    <form action="/inv/add-inventory" method="post">
+        <div>
+            <h3>All fields are required.</h3>
+        </div>
+        <div class="inv-label">
+            <label for="select_classification">Classification: </label>
+            <%- selectList %>
+        </div>
+        
+        <br>
+
+         <div class="inv-label"> 
+        <label for="make">Make:</label>
+        <input id="make" name="inv_make" type="text" placeholder="Min of 3 characters" 
+            required
+            minlength="3"
+            value="<%= locals.inv_make %>" > 
+        </div>  
+           
+        <div class="inv-label">
+        <label for="model">Model:</label>
+        <input id="model" name="inv_model" type="text" placeholder="Min of 3 characters" 
+            required
+            minlength="3"
+            value="<%= locals.inv_model %>" > 
+        </div>
+           
+        <div class="inv-label">
+        <label for="year">Year:</label>
+        <input id="year" name="inv_year" type="number" placeholder="4-digit year" 
+            required
+            max="9999"
+            value="<%= locals.inv_year %>" > 
+        </div>
+
+        <div class="inv-label">       
+        <label for="description">Description: </label>
+        <textarea id="description" name="inv_description" placeholder="Description" required><%= locals.inv_description %></textarea>
+        </div> 
+
+        <div class="inv-label">
+        <label for="image">Image:</label>
+        <input id="image" name="inv_image" type="text" placeholder="Image" 
+            required 
+            value="/images/vehicles/no-image.png"> 
+        </div> 
+              
+        <div class="inv-label">
+        <label for="thumbnail">Thumbnail:</label>
+        <input id="thumbnail" name="inv_thumbnail" type="text" placeholder="Thumbnail Image" 
+            required 
+            value="/images/vehicles/no-image.png"> 
+        </div>
+             
+        <div class="inv-label">
+        <label for="price">Price:</label>
+        <input id="price" name="inv_price" type="number" placeholder="Decimal or integer" 
+            required
+            value="<%= locals.inv_price %>" > 
+        </div>
+            
+        <div class="inv-label">
+        <label for="miles">Miles:</label>
+        <input id="miles" name="inv_miles" type="number" placeholder="Digits only" 
+            required
+            value="<%= locals.inv_miles %>" > 
+        </div>
+             
+        <div class="inv-label">
+        <label for="color">Color:</label>
+        <input id="color" name="inv_color" type="text" placeholder="Color" 
+            required
+            value="<%= locals.inv_color %>" > 
+        </div>
+                
+        <br>
+        <button type="submit" class="form-btn">Add Vehicle</button>
+
+        
+    </form>
+
+</div>
