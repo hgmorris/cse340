@@ -174,7 +174,7 @@ nav ul li a:hover {
     font-size: 18px;
     background-color: white;
     padding: 5%;
-    border: 8px solid #4cc9f0;
+    border     : 8px solid #4cc9f0;
   }
 
   #welcome {
@@ -298,8 +298,6 @@ nav ul li a:hover {
   color: #4c52f0;
 }
 
-
-
 .namePrice {
   margin-top: 10px;
 }
@@ -308,8 +306,6 @@ nav ul li a:hover {
   width: 100%;
 }
 
-
- 
 /* Base styles */
 #inv-display {
   list-style-type: none;
@@ -319,7 +315,7 @@ nav ul li a:hover {
   flex-wrap: wrap;
   justify-content: space-around;
 }
- 
+
 #inv-display li {
   width: 300px; /* Adjust based on preference */
   margin: 20px;
@@ -327,13 +323,12 @@ nav ul li a:hover {
   transition: box-shadow 0.3s ease;
   border-radius: 18px;
   border-style: solid;
- 
 }
- 
+
 #inv-display li:hover {
   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
- 
+
 #inv-display img {
   width: 100%;
   height: 52%;
@@ -341,53 +336,51 @@ nav ul li a:hover {
   border-radius: 19px;
   padding: 2px;
 }
- 
+
 .namePrice {
   padding: 15px;
   text-align: center;
   background: #f8f8f8;
 }
- 
+
 .namePrice h2, .namePrice span {
   margin: 10px 0;
 }
- 
+
 .namePrice hr {
   margin: 15px 0;
 }
- 
+
 h1 {
   text-align: center;
   margin-top: 20px;
 }
- 
- 
- 
+
 @media (max-width: 480px) {
   #inv-display {
-      justify-content: center;
+    justify-content: center;
   }
- 
+
   #inv-display li {
-      width: 90%; /* Full width for smaller screens, adjust as necessary */
-      margin: 10px 0; /* Reduce margin for smaller screens */
+    width: 90%; /* Full width for smaller screens, adjust as necessary */
+    margin: 10px 0; /* Reduce margin for smaller screens */
   }
 }
- 
-/* detail page */
+
+/* Detail page */
 .vehicle-detail {
   width: 80%;
   margin: 0 auto;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   border-radius: 16px;
 }
- 
+
 .vehicle-detail h1 {
   margin: 10px 0; /* Ensure the title has some margin */
 }
- 
+
 .vehicle-detail img {
   max-width: 100%;
   height: auto;
@@ -395,16 +388,16 @@ h1 {
   border-style: solid;
   border-radius: 10px;
 }
- 
+
 .detail-text p {
   margin: 10px 0;
 }
- 
+
 .notice {
   text-align: center;
   color: #ff0000;
 }
- 
+
 /* Large view adjustments */
 @media (min-width: 1024px) {
   .vehicle-content {
@@ -413,16 +406,17 @@ h1 {
     gap: 20px;
     align-items: start;
   }
- 
+
   .vehicle-detail img {
     object-fit: cover;
     height: 100%;
     margin-bottom: 0;
   }
- 
+
   .detail-text {
     text-align: left;
     position: relative;
     right: 79px;
   }
 }
+
