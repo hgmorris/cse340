@@ -90,6 +90,12 @@ nav ul li a:hover {
   font-size: 1.5rem;
 }
 
+.notice{
+  text-align: left;
+  color: #ff0000;
+}
+
+
 #delo {
   background-image: url('../images/vehicles/delorean.jpg');
   background-size: 57vw auto;
@@ -135,32 +141,6 @@ nav ul li a:hover {
   gap: 5px;
 }
 
-.upgrades-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-}
-
-.upgrade {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #4CC9F0;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  color: white;
-  position: relative;
-  height: 125px;
-}
-
-.upgrade-image {
-  width: 80%;
-  height: 80%;
-  object-fit: contain;
-  margin-bottom: 10px;
-}
-
 /* Media Query for screens with minimum width 768px */
 @media screen and (min-width: 768px) {
   :root {
@@ -175,10 +155,6 @@ nav ul li a:hover {
     background-color: white;
     padding: 5%;
     border     : 8px solid #4cc9f0;
-  }
-
-  #welcome {
-    margin-top: 20px;
   }
 
   .car-grid {
@@ -293,11 +269,6 @@ nav ul li a:hover {
   text-decoration: none;
 }
 
-.upgrade-name:hover {
-  text-decoration: underline;
-  color: #4c52f0;
-}
-
 .namePrice {
   margin-top: 10px;
 }
@@ -393,30 +364,4 @@ h1 {
   margin: 10px 0;
 }
 
-.notice {
-  text-align: center;
-  color: #ff0000;
-}
-
-/* Large view adjustments */
-@media (min-width: 1024px) {
-  .vehicle-content {
-    display: grid;
-    grid-template-columns: 60% 40%;
-    gap: 20px;
-    align-items: start;
-  }
-
-  .vehicle-detail img {
-    object-fit: cover;
-    height: 100%;
-    margin-bottom: 0;
-  }
-
-  .detail-text {
-    text-align: left;
-    position: relative;
-    right: 79px;
-  }
-}
 
