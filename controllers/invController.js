@@ -90,6 +90,20 @@ invCont.BuildManagement = async function (req, res, next) {
 }
 
 
+invCont.showManagementView = async function(req, res) {
+   try {
+       let nav = await utilities.getNav();
+       res.render("inventory/managementView", {
+           title: "Vehicle Management",
+           nav,
+       });
+   } catch (error) {
+       console.error("Error loading management view:", error);
+       res.status(500).send("Sorry, we appear to have lost that page.");
+   }
+};
+
+
 
 /* ***************************
  *  Unit 4 - Add Classification 
