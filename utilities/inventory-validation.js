@@ -23,6 +23,15 @@ validate.classificationRules = () => {
   ];
 };
 
+validate.addClassificationRules = () => {
+  return [
+    body('classification_name')
+      .trim()
+      .isAlphanumeric()
+      .withMessage('Classification name must be alphanumeric.'),
+  ];
+};
+
 validate.inventoryRules = () => {
   return [
     body("inv_make").trim().isLength({ min: 3 }).withMessage("Please enter a valid vehicle make."),
