@@ -1,0 +1,17 @@
+<!-- *****************
+*   Management View
+*   Assignment 4
+****************** -->
+
+<!-- Content Heading -->
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <%} %>
+    <%- messages() %>
+
+<!-- Displays the two links for -->
+<div class="management">
+    <a href="/inv/add-classification">Add New Classification</a>
+    <br>
+    <a href="/inv/add-inventory">Add New Vehicle</a>
+</div>

@@ -90,10 +90,6 @@ nav ul li a:hover {
   font-size: 1.5rem;
 }
 
-.notice{
-  text-align: left;
-  color: #ff0000;
-}
 
 
 #delo {
@@ -101,6 +97,7 @@ nav ul li a:hover {
   background-size: 57vw auto;
   background-repeat: no-repeat;
   background-position: right;
+
 }
 
 #DMC {
@@ -311,15 +308,17 @@ nav ul li a:hover {
 .namePrice {
   padding: 15px;
   text-align: center;
-  background: #f8f8f8;
+  background: white;
 }
 
 .namePrice h2, .namePrice span {
   margin: 10px 0;
+  color: white;
 }
 
 .namePrice hr {
   margin: 15px 0;
+
 }
 
 h1 {
@@ -346,6 +345,10 @@ h1 {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   border-radius: 16px;
+  background-color: black;
+  border-style: solid;
+  border-radius: 10px;
+  border-color: #4cc9f0;
 }
 
 .vehicle-detail h1 {
@@ -362,6 +365,185 @@ h1 {
 
 .detail-text p {
   margin: 10px 0;
+  color: #020708;
 }
 
+/* Styles for both login and registration forms */
+.login-container, .register-container {
+  background-color: #09636B; 
+  border: 1px solid #ccc; 
+  margin: 40px auto; 
+  padding: 20px; 
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+  border-radius: 8px; 
+  max-width: 100%; 
+  width: 400px;
+}
 
+h1 {
+  color: black; 
+  text-align: center; 
+}
+
+/* Styling for form groups to ensure consistency */
+.form-group {
+  margin-bottom: 20px; 
+}
+
+.form-group label {
+  display: block; 
+  margin-bottom: .5rem; 
+  color: white; 
+}
+
+/* Input styling for text, email, and password fields */
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="text"] {
+  display: block; 
+  width: 100%; 
+  padding: 10px; 
+  margin-top: 5px; 
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+  box-sizing: border-box; 
+}
+
+/* Submit button enhancements for better interaction */
+button[type="submit"] {
+  width: 100%; 
+  background-color: #007bff; 
+  color: rgb(255, 255, 255); 
+  padding: 10px; 
+  border: none; 
+  border-radius: 4px; 
+  cursor: pointer; 
+  font-size: 16px; 
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3; 
+}
+
+/* Link styling for better visibility and interaction */
+a {
+  color:black; 
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: black;
+}
+
+/* Style for displaying error notices */
+.notice {
+  color: #d9534f; 
+  border: 1px solid #ebccd1;
+  background-color: #f2dede; 
+  padding: 10px; 
+  margin-bottom: 20px;
+  border-radius: 4px; 
+  text-align: center; 
+}
+
+/* Helper text styling for form input requirements */
+.form-group p {
+  font-size: 0.9rem; 
+  color: black; 
+  margin-top: 5px; 
+}
+/* Existing Styles */
+.management-container {
+  max-width: 600px;
+  margin: 40px auto;
+  background: #4cc9f0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.management-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.management-container ul li {
+  margin-bottom: 10px;
+}
+
+.management-container ul li a {
+  display: block;
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.management-container ul li a:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  form, .management-container {
+      width: 90%;
+      padding: 15px;
+  }
+}
+
+/* New Styles */
+/* Form Box */
+.form-box {
+  background: #4cc9f0;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Elements */
+.inv-label {
+  margin-bottom: 15px;
+}
+
+.inv-label label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* makes sure padding doesn't affect the total width */
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Buttons */
+.form-btn {
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.form-btn:hover {
+  background-color: #0056b3;
+}

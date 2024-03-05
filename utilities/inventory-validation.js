@@ -1,3 +1,4 @@
+const { body, validationResult } = require('express-validator');
 const invModel = require("../models/inventory-model");
 const utilities = require(".");
 const validate = {};
@@ -134,6 +135,7 @@ validate.checkUpdateData = async (req, res, next) => {
   }
   next();
 };
+
 
 
 module.exports = validate;

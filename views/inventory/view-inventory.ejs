@@ -1,3 +1,9 @@
+<!-- ************************
+*   Add Inventory View
+*       Assignment 4
+************************* -->
+
+
 <!-- Content Heading -->
 <% if (title) { %>
     <h1><%= title %></h1>
@@ -17,11 +23,9 @@
    </ul>
 <% } %>
 
-
-
 <!-- Add-Inventory Form -->
 <div class="form-box">
-    <form action="/inv/add-inventory" method="post">
+    <form action="/inv/update" method="post">
         <div>
             <h3>All fields are required.</h3>
         </div>
@@ -65,14 +69,14 @@
         <label for="image">Image:</label>
         <input id="image" name="inv_image" type="text" placeholder="Image" 
             required 
-            value="/images/vehicles/no-image.png">
+            value="<%= locals.inv_image %>"> 
         </div> 
               
         <div class="inv-label">
         <label for="thumbnail">Thumbnail:</label>
         <input id="thumbnail" name="inv_thumbnail" type="text" placeholder="Thumbnail Image" 
-            required
-            value="/images/vehicles/no-image.png">
+            required 
+            value="<%= locals.inv_thumbnail %>"> 
         </div>
              
         <div class="inv-label">
@@ -95,10 +99,14 @@
             required
             value="<%= locals.inv_color %>" > 
         </div>
+
+        <input type="hidden" name="inv_id"
+        <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+        <% } %>>
                 
         <br>
-        <button type="submit" class="form-btn">Add Vehicle</button>
-
+        <button type="submit" class="form-btn">Update Vehicle</button>
+        
     </form>
 
 </div>

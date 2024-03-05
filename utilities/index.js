@@ -4,11 +4,12 @@
 
 const invModel = require("../models/inventory-model")
 
+
 const Util = {}
+
 
 Util.getNav = async function (req, res, next) {
   let data = await invModel.getClassifications()
-  console.log(data)
   let list = `<ul class="navbar">`
   list += '<li><a href="/" title="Home page">Home</a></li>'
   data.rows.forEach((row) => {
@@ -26,6 +27,7 @@ Util.getNav = async function (req, res, next) {
   list += "</ul>"
   return list
 }
+
 
 
 Util.getClassifications = async function (selectedClassification, req, res, next) {

@@ -1,0 +1,46 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+<% } %>
+
+<% if (messages && messages.error) { %>
+  <div class="error-message">
+    <%= messages.error %>
+  </div>
+<% } %>
+
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+
+<!-- Register Form -->
+<div class="register-container">
+  <p>All fields are required</p>
+  <form id="registerForm" action="/account/register" method="post">
+    <div class="form-group">
+      <label for="firstName">First Name:</label>
+      <input id="firstname" name="account_firstName" type="text" placeholder="First Name" required value="<%= locals.account_firstName %>">
+    </div>
+
+    <div class="form-group">
+      <label for="lastname">Last Name:</label>
+      <input id="lastname" name="account_lastName" type="text" placeholder="Last Name" required value="<%= locals.account_lastName %>">
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input id="email" name="account_email" type="email" placeholder="youremail@email.com" required value="<%= locals.account_email %>">
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input id="password" name="account_password" type="password" placeholder="Password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
+      <p>Password must be a minimum of 12 characters and include 1 capital letter, 1 number, and 1 special character</p>
+    </div>
+
+    <button type="submit">Register</button> <!-- Removed class="form-btn" to match CSS for button[type="submit"] -->
+  </form>
+</div>
