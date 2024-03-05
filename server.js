@@ -34,7 +34,7 @@ app.use(session({
     createTableIfMissing: true,
   }),
   secret: process.env.SESSION_SECRET,
-  resave: false, // Changed to false to avoid unnecessary session save
+  resave: true, // Changed to false to avoid unnecessary session save
   saveUninitialized: false, // Changed to false for login sessions
   name: 'sessionId',
 }));
