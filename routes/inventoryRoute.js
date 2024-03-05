@@ -33,7 +33,7 @@ router.get(
   utilities.handleErrors(invController.BuildAddInventory)
   )
 router.get(
-  "/management", 
+  "/", 
   utilities.handleErrors(invController.BuildManagement)
 )
 
