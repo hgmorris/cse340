@@ -89,7 +89,7 @@ app.use((err, req, res, next) => {
  * Server Configuration
  ************************/
 const PORT = process.env.PORT || 3000;
-const HOST = process.env.HOST || 'localhost';
+const HOST = process.env.HOST || '0.0.0.0'; // Changed from 'localhost' to '0.0.0.0'
 
 app.listen(PORT, HOST, () => {
   console.log(`App listening on ${HOST}:${PORT}`);
