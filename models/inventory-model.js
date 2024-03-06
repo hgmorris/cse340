@@ -99,6 +99,9 @@ module.exports = {
   getClassifications, 
   getInventoryByClassificationId, 
   getInventoryById,
+  addClassification,
+  checkExistingClassification,
+  getClassificationsById,
 };
 
 

@@ -11,12 +11,12 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const expressLayouts = require("express-ejs-layouts");
 const connectPgSimple = require("connect-pg-simple")(session);
-
-// Custom modules
+const cookieParser = require("cookie-parser");
+const utilities = require("./utilities/");
 const pool = require('./database/');
 const baseController = require("./controllers/baseController");
 const accountController = require("./controllers/accountController");
-const utilities = require("./utilities/");
+
 
 // Routes
 const staticRoutes = require("./routes/static"); // Renamed for clarity
@@ -35,9 +35,11 @@ app.use(session({
   }),
   secret: process.env.SESSION_SECRET,
   resave: true, // Changed to false to avoid unnecessary session save
-  saveUninitialized: false, // Changed to false for login sessions
+  saveUninitialized: false, // Changed to false to avoid unnecessary session save
   name: 'sessionId',
 }));
+app.use(cookieParser());
+app.use(utilities.checkJWTToken);
 
 // Express Messages Middleware
 app.use(require('connect-flash')());

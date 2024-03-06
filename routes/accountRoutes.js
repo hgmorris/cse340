@@ -22,9 +22,14 @@ utilities.handleErrors(accountController.registerAccount)
 
 // Login route
 router.post(
-    "/login",
-    regValidate.loginRules(),
-    regValidate.checkLoginData,
-  );
+  "/login",
+  regValidate.loginRules(),
+  regValidate.checkLoginData,
+  utilities.handleErrors(accountController.accountLogin)
+)
+
+// Default account route
+router.get("/account", utilities.handleErrors(accountController.accountDashboard));
+
 
 module.exports = router;

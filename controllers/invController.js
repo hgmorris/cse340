@@ -3,6 +3,9 @@ const utilities = require("../utilities/")
 const invCont = {}
 
 
+
+
+
 /* ***************************
  *  Build inventory by classification view
  * ************************** */
@@ -36,22 +39,6 @@ invCont.BuildByVehicleId = async function (req, res, next) {
 
 
 /* ***************************
- *  Build Add Classification View
- *  Assignment 4
- * ************************** */
-invCont.BuildAddClassification = async function (req, res, next) {
-  let nav = await utilities.getNav()
-  res.render("./inventory/add-classification", {
-    title: "Add Classification",
-    nav,
-    errors: null,
-  })
-}
-
-
-
-
-/* ***************************
  *  Unit 4 - Build Add Inventory View
  *  Assignment 4
  * ************************** */
@@ -67,6 +54,16 @@ invCont.BuildAddInventory = async function (req, res, next) {
   })
 }
 
+// add classification view
+
+invCont.BuildAddClassification = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  res.render("./inventory/add-classification", {
+    title: "Add Classification",
+    nav,
+    errors: null,
+  })
+}
 
 
 
@@ -74,26 +71,10 @@ invCont.BuildAddInventory = async function (req, res, next) {
  *  Build Management View
  *  Assignment 4 Task 1
  * ************************** */
-invCont.BuildManagement = async function (req, res, next) {
-  let nav = await utilities.getNav()
-  const { classification_id } = req.body
-  const selectList = await utilities.getClassifications(classification_id)
-  
-  res.render("./inventory/management", {
-    title: "Vehicle Management",
-    nav,
-    selectList,
-    errors: null,
-    
-    
-  })
-}
-
-
 invCont.showManagementView = async function(req, res) {
    try {
        let nav = await utilities.getNav();
-       res.render("inventory/managementView", {
+       res.render("./inventory/management", {
            title: "Vehicle Management",
            nav,
        });
@@ -143,6 +124,8 @@ invCont.AddNewClassification = async function (req, res, next) {
 }
 
 
+
+
 /* ***************************
  *  Unit 4 - Add Inventory 
  *  Assignment 4
@@ -178,7 +161,6 @@ invCont.AddNewInventory = async function (req, res, next) {
     inv_color,
     classification_id
     )
-
 
   if (invResult) {
     req.flash(

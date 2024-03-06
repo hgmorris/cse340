@@ -1,0 +1,22 @@
+<head>
+    <title>Account Dashboard</title>
+</head>
+<body>
+    <div class="container">
+        <!-- Display flash messages -->
+        <% if (flashMessage) { %>
+            <div class="flash-message"><%= flashMessage %></div>
+        <% } %>
+
+        <!-- Display errors -->
+        <% if (errors.length > 0) { %>
+            <ul class="errors">
+                <% errors.forEach(function(error) { %>
+                    <li><%= error.msg %></li>
+                <% }) %>
+            </ul>
+        <% } %>
+
+        <h1>You're logged in!</h1>
+    </div>
+</body>

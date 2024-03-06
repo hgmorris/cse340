@@ -10,14 +10,22 @@ const Util = require("../utilities")
 
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId)
 )
-
 router.get( "/detail/:vehicleId", utilities.handleErrors(invController.BuildByVehicleId)
+)
+
+router.get(
+  "/", 
+  utilities.handleErrors(invController.showManagementView)
 )
 
 router.get(
   "/add-classification", 
   utilities.handleErrors(invController.BuildAddClassification)
   )
+  router.get(
+    "/add-inventory", 
+    utilities.handleErrors(invController.BuildAddInventory)
+    )
 
   router.post(
     "/add-classification",
@@ -27,21 +35,6 @@ router.get(
   ) 
   
 
-
-router.get(
-  "/add-inventory", 
-  utilities.handleErrors(invController.BuildAddInventory)
-  )
-router.get(
-  "/", 
-  utilities.handleErrors(invController.BuildManagement)
-)
-
-router.get(
-  "/getInventory/:classification_id",
-  utilities.handleErrors(invController.getInventoryJSON)
-)
-
 router.post(
   "/add-inventory",
   regValidate.inventoryRules(),
@@ -49,16 +42,7 @@ router.post(
   utilities.handleErrors(invController.AddNewInventory)  
 )
 
-router.get(
-  "/edit/:inv_id",
-  utilities.handleErrors(invController.editInventoryView)
-)
-router.post(
-  "/update/", 
-  regValidate.inventoryRules(),
-  regValidate.checkUpdateData,
-  utilities.handleErrors(invController.updateInventory)
-)
+
 
 
 module.exports = router;
