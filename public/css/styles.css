@@ -370,7 +370,7 @@ h1 {
 
 /* Styles for both login and registration forms */
 .login-container, .register-container {
-  background-color: #09636B; 
+  background-color: #4CAF50; 
   border: 1px solid #ccc; 
   margin: 40px auto; 
   padding: 20px; 
@@ -393,7 +393,7 @@ h1 {
 .form-group label {
   display: block; 
   margin-bottom: .5rem; 
-  color: white; 
+  color: black; 
 }
 
 /* Input styling for text, email, and password fields */
@@ -412,18 +412,16 @@ h1 {
 /* Submit button enhancements for better interaction */
 button[type="submit"] {
   width: 100%; 
-  background-color: #007bff; 
-  color: rgb(255, 255, 255); 
+  background-color: rgb(0, 123, 255);
   padding: 10px; 
   border: none; 
   border-radius: 4px; 
   cursor: pointer; 
-  font-size: 16px; 
+  font-size: 16px;
+
 }
 
-button[type="submit"]:hover {
-  background-color: #0056b3; 
-}
+
 
 /* Link styling for better visibility and interaction */
 a {
@@ -453,11 +451,10 @@ a:hover {
   color: black; 
   margin-top: 5px; 
 }
-/* Existing Styles */
 .management-container {
   max-width: 600px;
   margin: 40px auto;
-  background: #4cc9f0;
+  background: whitesmoke;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -474,7 +471,7 @@ a:hover {
 
 .management-container ul li a {
   display: block;
-  background-color: #007bff;
+  background-color: #4CAF50;
   color: white;
   padding: 10px;
   text-decoration: none;
@@ -483,20 +480,23 @@ a:hover {
 }
 
 .management-container ul li a:hover {
-  background-color: #0056b3;
+  background-color: #4CAF50;
 }
 
 @media (max-width: 768px) {
   form, .management-container {
-      width: 90%;
-      padding: 15px;
+    width: 90%; /* Sets the width to 90% of the viewport width */
+    padding: 15px; 
+    margin: 0 auto; 
+    box-sizing: border-box;
   }
 }
 
-/* New Styles */
+
+
 /* Form Box */
 .form-box {
-  background: #4cc9f0;
+  background:#4CAF50;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -529,15 +529,15 @@ input[type="text"]:focus,
 input[type="number"]:focus,
 textarea:focus,
 select:focus {
-  border-color: #007bff;
+  border-color: #4CAF50;
   outline: none;
 }
 
 /* Buttons */
 .form-btn {
-  background-color: #007bff;
+  background-color: #4CAF50;
   color: #ffffff;
-  padding: 10px 20px;
+  padding: 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -545,5 +545,32 @@ select:focus {
 }
 
 .form-btn:hover {
-  background-color: #0056b3;
+  background-color: #4CAF50;
 }
+
+.management {
+  background-color: #f2f2f2; 
+  padding: 20px; 
+  border-radius: 5px; 
+  width: auto; 
+  max-width: 300px; 
+  margin: auto; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.management a {
+  display: inline-block; 
+  background-color: #4CAF50; 
+  color: white; 
+  padding: 10px 20px; 
+  text-decoration: none; 
+  border-radius: 4px; 
+  margin: 5px 0;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.management a:hover {
+  background-color: #45a049;
+  transform: translateY(-2px); 
+}
+

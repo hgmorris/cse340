@@ -102,6 +102,7 @@ module.exports = {
   addClassification,
   checkExistingClassification,
   getClassificationsById,
+  addInventory,
 };
 
 
