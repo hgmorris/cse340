@@ -17,8 +17,6 @@ async function buildLogin(req, res, next) {
 
 
 
-
-
 /* ****************************************
 *  Deliver registration view
 * *************************************** */
@@ -114,23 +112,11 @@ async function accountLogin(req, res) {
   }
  }
 
- exports.accountDashboard = async (req, res, next) => {
-  try {
-      // Here you could fetch user data or any other data required for the view
-      // For demonstration, we'll pass a simple flash message (you can replace this with your actual logic)
-      const flashMessage = req.session.flashMessage || 'Welcome to your dashboard!';
-      delete req.session.flashMessage; // Clear the flash message after displaying it
+ 
 
-      res.render('account/accountDashboard', {
-          flashMessage,
-          errors: [] // Assume no errors for now, replace with actual error handling logic
-      });
-  } catch (error) {
-      next(error);
-  }
-};
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin }
 
 
 
 
-  module.exports = { buildLogin, buildRegister, registerAccount }
+
