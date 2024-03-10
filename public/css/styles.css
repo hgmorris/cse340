@@ -11,8 +11,9 @@
 /* Mobile-first styles */
 body {
   font-family: "Open Sans", monospace, sans-serif;
-  max-width: 1200px;
-  margin: 10%;
+  max-width: 100%; /* Changed to ensure it doesn't overflow on small devices */
+  margin: 10% auto;
+  padding: 0 10px; 
 }
 
 p {
@@ -448,8 +449,8 @@ a:hover {
   margin-top: 5px; 
 }
 .management-container {
-  max-width: 400px;
-  margin: 40px auto;
+  max-width: 100%;
+  margin: 0 auto;
   background: whitesmoke;
   padding: 20px;
   border-radius: 8px;
@@ -560,4 +561,8 @@ select:focus {
   background-color: #45a049;
   transform: translateY(-2px); 
 }
+
+
+
+
 
