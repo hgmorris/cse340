@@ -71,6 +71,7 @@ validate.checkLoginData = async (req, res, next) => {
   let errors = []
   errors = validationResult(req)
   if (!errors.isEmpty()) {
+    console.log("There are errors in the login validation.", errors)
     let nav = await utilities.getNav()
     res.render("account/login", {
       errors,

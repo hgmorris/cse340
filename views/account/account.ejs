@@ -1,0 +1,36 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+} %>
+
+<%- messages() %>
+
+<!-- Account Error Display -->
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+<% } %>
+
+<h3>You're logged in!</h3>
+
+<div class="account-management">
+  
+
+  <!-- Display a "Welcome <account_name>" -->
+  <h2 class="account-welcome">Welcome <%= locals.accountData.account_firstName %></h2>
+
+  <br>
+
+  <!-- Edit Account Information - Need to create this! -->
+  <a title="Edit Account Information" href="/account/editAccount/<%= locals.accountData.account_id %>">Edit Account Information</a>
+  <br>
+  <!-- If logged in AND account type == Employee OR Admin, Let them access inventory management -->
+  <% if(locals.loggedin && locals.accountData.account_type == 'Employee' || locals.accountData.account_type == 'Admin') { %>
+    <h3>Inventory Management</h3>
+    <a  title="Manage Account" href="/inv/">Edit Inventory</a>
+  <% } %>
+    <br>

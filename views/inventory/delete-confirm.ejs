@@ -1,0 +1,73 @@
+<!-- ************************
+*   Add Inventory View
+*       Assignment 4
+************************* -->
+
+
+<!-- Content Heading -->
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+
+<!-- Display Messages -->
+<%- messages()  %>
+
+<!-- Add-Inventory Error Display -->
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+<% } %>
+
+<!-- Add-Inventory Form -->
+<div class="form-box">
+    <form action="/inv/delete" method="post">
+        <div>
+            <h3>Confirm Deletion: <br> This deletion is permanent.</h3>
+        </div>
+        
+        <br>
+
+         <div class="inv-label"> 
+        <label for="make">Make:</label>
+        <input id="make" type="text" 
+            readonly <% if(locals.inv_make) {%>
+            value="<%= locals.inv_make %>" > 
+            <% } %> 
+        </div>  
+           
+        <div class="inv-label">
+        <label for="model">Model:</label>
+        <input id="model" type="text" 
+            readonly <% if(locals.inv_model) {%>
+            value="<%= locals.inv_model %>" > 
+            <% } %>
+        </div>
+           
+        <div class="inv-label">
+        <label for="year">Year:</label>
+        <input id="year" type="number" 
+            readonly <% if(locals.inv_year) {%>
+            value="<%= locals.inv_year %>" > 
+            <% } %>
+        </div>
+
+        <div class="inv-label">
+        <label for="price">Price:</label>
+        <input id="price" type="number" 
+            readonly <% if(locals.inv_price) {%>
+            value="<%= locals.inv_price %>" > 
+            <% } %>
+        </div>
+
+        <input type="hidden" name="inv_id"
+        <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+        <% } %>>     
+        <br>
+        <button type="submit" class="form-btn">Delete Vehicle</button>
+    </form>
+</div>

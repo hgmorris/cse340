@@ -9,9 +9,22 @@
     <%} %>
     <%- messages() %>
 
-<!-- Displays the two links for -->
+
+<!-- Links to add new classification or inventory item -->
 <div class="management">
     <a href="/inv/add-classification">Add New Classification</a>
     <br>
     <a href="/inv/add-inventory">Add New Vehicle</a>
 </div>
+
+<!-- Heading to manage inventory -->
+<h2>Manage Inventory</h2>
+<P> Choose a classification to see those inventory items.</P>
+<%- dropdown %>
+
+<!-- Empty HTML table for displaying inventory items -->
+<table id="inventoryDisplay"></table>
+
+<!-- Add a script tag to include the JavaScript file -->
+<noscript> JavaScript must be enable to use this page.</noscript>
+<script src="../../js/inventory.js"></script>

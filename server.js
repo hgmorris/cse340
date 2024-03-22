@@ -3,87 +3,110 @@
  * application. It is used to control the project.
  *******************************************/
 
-/************************
+/* ***********************
  * Require Statements
- ************************/
-const express = require("express");
-const session = require("express-session");
-const bodyParser = require("body-parser");
-const expressLayouts = require("express-ejs-layouts");
-const connectPgSimple = require("connect-pg-simple")(session);
-const cookieParser = require("cookie-parser");
-const utilities = require("./utilities/");
-const pool = require('./database/');
-const baseController = require("./controllers/baseController");
-const accountController = require("./controllers/accountController");
+ *************************/
+const express = require("express")
+const expressLayouts = require("express-ejs-layouts")
+const env = require("dotenv").config()
+const app = express()
+const static = require("./routes/static")
+const baseController = require("./controllers/baseController")
+const inventoryRoute = require("./routes/inventoryRoute")
+const utilities = require('./utilities/');
+const session = require("express-session")
+const pool = require('./database/')
+const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser")
 
 
-// Routes
-const staticRoutes = require("./routes/static"); // Renamed for clarity
-const inventoryRoute = require("./routes/inventoryRoute");
-const accountRoutes = require("./routes/accountRoutes");
-
-const app = express();
 
 /************************
  * Middleware
  ************************/
+/* ***********************
+ * Middleware
+ * ************************/
 app.use(session({
-  store: new connectPgSimple({
-    pool: pool,
+  store: new (require('connect-pg-simple')(session))({
     createTableIfMissing: true,
+    pool,
   }),
   secret: process.env.SESSION_SECRET,
-  resave: true, // Changed to false to avoid unnecessary session save
-  saveUninitialized: false, // Changed to false to avoid unnecessary session save
+  resave: true,
+  saveUninitialized: true,
   name: 'sessionId',
-}));
-app.use(cookieParser());
-app.use(utilities.checkJWTToken);
+}))
 
 // Express Messages Middleware
-app.use(require('connect-flash')());
-app.use(function(req, res, next) {
-  res.locals.messages = require('express-messages')(req, res);
-  next();
-});
+app.use(require('connect-flash')())
+app.use(function(req, res, next){
+  res.locals.messages = require('express-messages')(req, res)
+  next()
+})
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// for parsing application/x-www-form-urlencoded
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true })) 
 
-app.set("view engine", "ejs");
-app.use(expressLayouts);
-app.set("layout", "./layouts/layout");
+// Unit 5 Login JWT and Cookie
+app.use(cookieParser())
 
-// Serve static files
-app.use(express.static('public')); // Corrected to serve static files from the public directory
+// Unit 5 Login JWT and Cookie
+app.use(utilities.checkJWTToken)
 
-/************************
+
+
+/* ***********************
+ * View Engine and Templates
+ *************************/
+app.set("view engine", "ejs")
+app.use(expressLayouts)
+app.set("layout", "./layouts/layout") // not at views root
+
+
+
+/* ***********************
  * Routes
- ************************/
-app.get("/", utilities.handleErrors(baseController.buildHome));
-app.use("/inv", inventoryRoute);
-app.get("/error", utilities.handleErrors(baseController.buildError));
-app.post('/register', utilities.handleErrors(accountController.registerAccount));
-app.use("/account", utilities.handleErrors(accountRoutes));
+ *************************/
+app.use(require("./routes/static"))
 
-// File Not Found Route - must be the last route
-app.use((req, res, next) => {
-  next({ status: 404, message: 'Sorry, we appear to have lost that page.' });
-});
 
-/************************
+// Index route
+app.get("/", utilities.handleErrors(baseController.buildHome))
+
+// Account routes - Unit 3
+app.use("/account", utilities.handleErrors(require("./routes/accountRoutes")))
+
+// Inventory routes - Unit 3 
+app.use("/inv", utilities.handleErrors(require("./routes/inventoryRoute")))
+
+
+
+// Error Route (For testing and Assignment 3)
+app.get("/error", utilities.handleErrors(baseController.buildError))
+
+// File Not Found Route 
+// Must be last route in list
+app.use(async (req, res, next) => {
+  next({status: 404, message: 'Sorry, we appear to have lost that page.'})
+})
+
+
+/* ***********************
 * Express Error Handler
-************************/
-app.use((err, req, res, next) => {
-  console.error(`Error at: "${req.originalUrl}": ${err.message}`);
-  let message = err.status === 404 ? err.message : 'Oh no! There was a crash. Maybe try a different route?';
-  res.status(err.status || 500).render("errors/error", {
+* Place after all other middleware
+*************************/
+app.use(async (err, req, res, next) => {
+  let nav = await utilities.getNav()
+  console.error(`Error at: "${req.originalUrl}": ${err.message}`)
+  if(err.status == 404){ message = err.message} else {message = 'Oh no! There was a crash. Maybe try a different route?'}
+  res.render("errors/error", {
     title: err.status || 'Server Error',
     message,
-    nav: [] // Assuming getNav() returns navigation items, replace [] with actual call if needed
-  });
-});
+    nav
+  })
+})
 
 /************************
  * Server Configuration
