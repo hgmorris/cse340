@@ -32,7 +32,8 @@ Util.getNav = async function (req, res, next) {
 
 Util.getDropdown = async function (selectedClassification = null) {
   let data = await invModel.getClassifications()
-  let selectList = '<select name="classification_id" id="select_classification" class="select-classification">'
+  let selectList = '<select name="classification_id" id="classificationList" class="select-classification">'
+  selectList += '<option value="" disabled selected>Select a Classification</option>'
   data.rows.forEach((row) => {
     let selected = ""
     if (selectedClassification == row.classification_id) {

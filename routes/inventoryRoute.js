@@ -15,6 +15,7 @@ router.get( "/detail/:vehicleId", utilities.handleErrors(invController.BuildByVe
 
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 
+
 router.get(
   "/",
   utilities.handleErrors(invController.showManagementView)
@@ -34,7 +35,6 @@ router.post(
     regValidate.checkClassificationData,
     utilities.handleErrors(invController.AddNewClassification)
 )
-
 
 
 router.get(

@@ -195,6 +195,55 @@ async function updateAccount(req, res, next) {
   }
 }
 
+/* ****************************************
+*  Unit 5 Task 4
+*  Update Account Info
+* ************************************ */
+async function updatePassword(req, res, next) {
+  let nav = await utilities.getNav()
+  const {
+    account_password,
+    account_id,
+  } = req.body
+
+  let hashedPassword
+  try {
+    // regular password and cost (salt is generated automatically)
+    hashedPassword = await bcrypt.hashSync(account_password, 10)
+  } catch (error) {
+    req.flash("notice", 'Sorry, there was an error updating the password.')
+    res.status(500).render("account/editAccount", {
+      title: "Edit Account",
+      nav,
+      errors: null,
+    })
+  }
+
+  const updateResult = await accountModel.updatePassword(
+    hashedPassword,
+    account_id,
+  )
+
+  const accountData = await accountModel.getAccountById(account_id)
+
+  if (updateResult) {
+    req.flash("notice", `Your password has been updated!`)
+    res.clearCookie("jwt")
+    delete accountData.account_password
+    const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000})
+    res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+    return res.redirect("/account/")
+
+  } else {
+    req.flash("notice", "Sorry, updating your password failed.")
+    res.status(501).render("account/editAccount", {
+      title: "Edit your account:",
+      nav,
+      errors: null,
+    })
+  }
+}
+
 
  /* ***************************
  *  Logout account
@@ -204,7 +253,7 @@ async function updateAccount(req, res, next) {
   res.clearCookie("jwt")
   res.redirect("../")
 }
-
+ 
 
 module.exports = { 
   buildLogin, 
@@ -215,5 +264,6 @@ module.exports = {
   editAccountView,
   updateAccount,
   logoutAccount,
+  updatePassword,
 }
 
