@@ -15,37 +15,31 @@
    </ul>
 <% } %>
 
-
 <!-- Register Form -->
 <div class="form-box">
     <form action="/account/update" method="post">
         <div class="fname">
-            <label for="firstName">First Name: </label>
-            <input id="firstname" name="account_firstName" type="text" placeholder="First Name" 
-                required value="<%= account_firstname %>"> 
+            <label for="firstname">First Name: </label>
+            <input id="firstname" name="account_firstname" type="text" placeholder="First name" 
+            required value="<%= account_firstname %>"> 
         </div>
-
         <div class="lname">
-            <label for="lastName">Last Name: </label>
-            <input id="lastName" name="account_lastname" type="text" placeholder="last name" 
-           value="<%= account_lastName %>"required> 
+            <label for="lastname">Last Name: </label>
+            <input id="lastname" name="account_lastname" type="text" placeholder="last name" 
+           value="<%= account_lastname %>" required> 
         </div>
-
         <div class="email">
             <label for="email">Email: </label>
             <input id="email" name="account_email" type="email" 
-            value="<%= account_email %>"required > 
+            value="<%= account_email %>" required > 
         </div>
-
         <input type="hidden" name="account_id" id="account_id"
         <% if(locals.accountData.account_id) { %> 
             value="<%= locals.accountData.account_id %>"
         <% } %>>
-
         <button type="submit" class="form-btn">Update Account</button>
     </form>
 </div>
-
 <!-- Password Change Form -->
 </form>
 </div>

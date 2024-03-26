@@ -18,7 +18,7 @@ router.get("/getInventory/:classification_id", utilities.handleErrors(invControl
 
 router.get(
   "/",
-  utilities.handleErrors(invController.showManagementView)
+  utilities.checkLogin,utilities.AccountType,utilities.handleErrors(invController.showManagementView)
 )
 
 

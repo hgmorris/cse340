@@ -215,18 +215,13 @@ Util.checkLogin = (req, res, next) => {
 
 
 Util.AccountType = async function (req, res, next) {
-    if (res.locals.loggedin) {
       if (res.locals.accountData.account_type === 'Employee' || res.locals.accountData.account_type === 'Admin' ) { 
       next()
       } else {
         req.flash("notice", "You don\'t have permission for this route")
         res.redirect("/account/login")
       }
-    } else {
-      req.flash("notice","You don\'t have access to the route")
-      res.redirect("/account/login")
-    }
-  }
+    } 
 
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
 

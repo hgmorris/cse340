@@ -146,8 +146,8 @@ async function accountLogin(req, res) {
     nav,
     errors: null,
     account_id,
-    account_firstName: accountData.account_firstname,
-    account_lastName: accountData.account_lastname,
+    account_firstname: accountData.account_firstname,
+    account_lastname: accountData.account_lastname,
     account_email: accountData.account_email,
     
   })
@@ -159,15 +159,15 @@ async function accountLogin(req, res) {
 async function updateAccount(req, res, next) {
   let nav = await utilities.getNav()
   const {
-    account_firstName,
-    account_lastName,
+    account_firstname,
+    account_lastname,
     account_email,
     account_id,
   } = req.body
 
   const updateResult = await accountModel.updateAccount(
-    account_firstName,
-    account_lastName,
+    account_firstname,
+    account_lastname,
     account_email,
     account_id,
   )
@@ -188,8 +188,8 @@ async function updateAccount(req, res, next) {
       title: "Edit your account:",
       nav,
       errors: null,
-      account_firstName,
-      account_lastName,
+      account_firstname,
+      account_lastname,
       account_email,
     })
   }
@@ -210,6 +210,23 @@ async function updatePassword(req, res, next) {
   try {
     // regular password and cost (salt is generated automatically)
     hashedPassword = await bcrypt.hashSync(account_password, 10)
+    // save the new password in the db
+    const updateResult = await accountModel.updatePassword(
+      hashedPassword,
+      account_id,
+    )
+    // render the account management page with a flash message  
+    if (updateResult) {
+      req.flash("notice", `Your password has been updated.`)
+      res.redirect("/account/")
+    } else {
+      req.flash("notice", "Sorry, the password update failed.")
+      res.status(501).render("account/editAccount", {
+        title: "Edit Account",
+        nav,
+        errors: null,
+      })
+    }
   } catch (error) {
     req.flash("notice", 'Sorry, there was an error updating the password.')
     res.status(500).render("account/editAccount", {
@@ -219,31 +236,7 @@ async function updatePassword(req, res, next) {
     })
   }
 
-  const updateResult = await accountModel.updatePassword(
-    hashedPassword,
-    account_id,
-  )
-
-  const accountData = await accountModel.getAccountById(account_id)
-
-  if (updateResult) {
-    req.flash("notice", `Your password has been updated!`)
-    res.clearCookie("jwt")
-    delete accountData.account_password
-    const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000})
-    res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
-    return res.redirect("/account/")
-
-  } else {
-    req.flash("notice", "Sorry, updating your password failed.")
-    res.status(501).render("account/editAccount", {
-      title: "Edit your account:",
-      nav,
-      errors: null,
-    })
-  }
 }
-
 
  /* ***************************
  *  Logout account

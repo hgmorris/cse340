@@ -1,66 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSE Motors</title>
-    <style>
-        /* Optional: Add your CSS styles here */
-    </style>
 </head>
-<body>
-
-        <h1 id="welcome">Welcome to CSE Motors!</h1>
-        <%- messages() %>
-        
-
-        
-        <div id="delo">
-            <section id="DMC">
-                <h2>DMC Delorean</h2>
-                <p>3 cup holders <br>
-                    Superman doors <br>
-                    Fuzzy dice!
-                </p>
-                <button id="own_t">Own Today</button>
+        <main>
+            <h1 id="welcome">Welcome to CSE Motors!</h1>
+            <div id="delo">
+                <section id="DMC">
+                    <h2>DMC Delorean</h2>
+                    <p>3 cup holders<br>Superman doors<br>Fuzzy dice!</p>
+                    <button id="own_t">Own Today</button>
+                </section>
+            </div>
+            <section class="the_delo">
+                <article class="reviews">
+                    <h3>DMC Delorean Reviews</h3>
+                    <ul id="DMC_reviews">
+                        <li>"So fast it's almost like traveling in time." (4/5)</li>
+                        <li>"Coolest ride on the road." (4/5)</li>
+                        <li>"I'm feeling McFly!" (5/5)</li>
+                        <li>"The most futuristic ride of our day." (4.5/5)</li>
+                        <li>"80's living and I love it!" (5/5)</li>
+                    </ul>
+                </article>
+                <section class="upgrades">
+                    <h3>Delorean Upgrades</h3>
+                    <div class="upgrades-grid">
+                        <div class="upgrade">
+                            <img src="/images/upgrades/flux-cap.png" alt="Flux Capacitor" class="upgrade-image">
+                            <a href="#" class="upgrade-name">Flux Capacitor</a>
+                        </div>
+                        <div class="upgrade">
+                            <img src="/images/upgrades/flame.jpg" alt="Flame Decals" class="upgrade-image">
+                            <a href="#" class="upgrade-name">Flame Decals</a>
+                        </div>
+                        <div class="upgrade">
+                            <img src="/images/upgrades/bumper_sticker.jpg" alt="Bumper Stickers" class="upgrade-image">
+                            <a href="#" class="upgrade-name">Bumper Stickers</a>
+                        </div>
+                        <div class="upgrade">
+                            <img src="/images/upgrades/hub-cap.jpg" alt="Hub Caps" class="upgrade-image">
+                            <a href="#" class="upgrade-name">Hub Caps</a>
+                        </div>
+                    </div>
+                </section>
             </section>
-        </div>
-
-        <section class="the_delo">
-            <article class="reviews">
-                <h3>DMC Delorean Reviews</h3>
-                <ul id="DMC_reviews">
-                    <li>"So fast it's almost like traveling in time." (4/5)</li>
-                    <li>"Coolest ride on the road." (4/5)</li>
-                    <li>"I'm feeling McFly!" (5/5)</li>
-                    <li>"The most futuristic ride of our day." (4.5/5)</li>
-                    <li>"80's living and I love it!" (5/5)</li>
-                </ul>
-            </article>
-            
-            <section class="upgrades">
-                <h3>Delorean Upgrades</h3>
-                <div class="upgrades-grid">
-                    <div class="upgrade">
-                        <img src="/images/upgrades/flux-cap.png" alt="Flux Capacitor" class="upgrade-image">
-                        <a href="#" class="upgrade-name">Flux Capacitor</a>
-                    </div>
-                    <div class="upgrade">
-                        <img src="/images/upgrades/flame.jpg" alt="Flame Decals" class="upgrade-image">
-                        <a href="#" class="upgrade-name">Flame Decals</a>
-                    </div>
-                    <div class="upgrade">
-                        <img src="/images/upgrades/bumper_sticker.jpg" alt="Bumper Stickers" class="upgrade-image">
-                        <a href="#" class="upgrade-name">Bumper Stickers</a>
-                    </div>
-                    <div class="upgrade">
-                        <img src="/images/upgrades/hub-cap.jpg" alt="Hub Caps" class="upgrade-image">
-                        <a href="#" class="upgrade-name">Hub Caps</a>
-                    </div>
-                </div>
-            </section>
-        </section>
-</body>
+        </main>
 </html>
 
     

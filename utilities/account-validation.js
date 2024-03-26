@@ -110,19 +110,16 @@ validate.checkRegistrationData = async (req, res, next) => {
 validate.accountUpdateRules = () => {
   return [
       // firstName is required and must be string
-      body("account_firstName")
+      body("account_firstname")
         .trim()
         .isLength({ min: 1 })
         .withMessage("A valid first name is required."), // on error this message is sent.
   
       // lastName is required and must be string
-      body("account_lastName")
+      body("account_lastname")
         .trim()
         .isLength({ min: 2 })
         .withMessage("A valid last name is required."), // on error this message is sent.
-
-      body("account_id")
-        .trim(),
       // valid email is required and cannot already exist in the DB
       body("account_email")
         .trim()
@@ -151,17 +148,18 @@ validate.accountUpdateRules = () => {
  * Check account data to make sure that it is all there when updating
  * ***************************** */
 validate.checkAccountData = async (req, res, next) => {
-  const { account_firstName, account_lastName, account_email } = req.body
+  const { account_firstname, account_lastname, account_email } = req.body
   let errors = []
   errors = validationResult(req)
   if (!errors.isEmpty()) {
+    console.log("There are errors in the account update validation.", errors)
     let nav = await utilities.getNav()
     res.render("account/editAccount", {
       errors,
       title: "Edit Account",
       nav,
-      account_firstName,
-      account_lastName,
+      account_firstname,
+      account_lastname,
       account_email,
     })
     return
@@ -175,8 +173,14 @@ validate.passwordRules = () => {
 
     body("account_password")
       .trim()
-      .isLength({ min: 1 })
-      .withMessage("Please enter a valid password"),
+      .isStrongPassword({
+        minLength: 12,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+      .withMessage("Password does not meet requirements.")
   ]
 }
 
