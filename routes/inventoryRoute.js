@@ -42,12 +42,10 @@ router.get(
   utilities.handleErrors(invController.BuildAddInventory)
   )
 
-
 router.get(
   "/getInventory/:classification_id",
   utilities.handleErrors(invController.getInventoryJSON)
 )
-
 
 router.post(
   "/add-inventory",
