@@ -21,6 +21,8 @@ const cookieParser = require("cookie-parser")
 
 
 
+
+
 /************************
  * Middleware
  ************************/
@@ -81,6 +83,25 @@ app.use("/account", utilities.handleErrors(require("./routes/accountRoutes")))
 // Inventory routes - Unit 3 
 app.use("/inv", utilities.handleErrors(require("./routes/inventoryRoute")))
 
+// Route for admin to view unapproved classifications and inventory items
+app.get("/admin/unapproved", utilities.handleErrors(baseController.buildAdmin))
+
+// JavaScript (Express.js)
+
+app.get('/account', async (req, res) => {
+  try {
+    // Get account data and classification list from the database
+    const accountData = await getAccountData(req.user.id); // replace with your function
+    const classificationList = await getClassificationList(); // replace with your function
+
+    // Render the account view with the account data and classification list
+    res.render('account', { accountData, classificationList });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred');
+  }
+});
+
 
 
 // Error Route (For testing and Assignment 3)
@@ -112,7 +133,8 @@ app.use(async (err, req, res, next) => {
  * Server Configuration
  ************************/
 const PORT = process.env.PORT || 3000;
-const HOST = process.env.HOST || '0.0.0.0'; // Changed from 'localhost' to '0.0.0.0'
+const HOST = process.env.HOST || '0.0.0.0'; 
+
 
 app.listen(PORT, HOST, () => {
   console.log(`App listening on ${HOST}:${PORT}`);

@@ -1,5 +1,12 @@
-const invModel = require("../models/inventory-model")
-const utilities = require("../utilities/")
+const e = require("connect-flash");
+const invModel = require("../models/inventory-model");
+const utilities = require("../utilities/");
+const { validationResult } = require("express-validator");
+
+
+
+// Now you can use getClassifications...
+
 const invCont = {}
 
 
@@ -36,6 +43,8 @@ invCont.BuildByVehicleId = async function (req, res, next) {
     grid,
   })
 }
+ 
+
 
 
 /* ***************************
@@ -296,6 +305,119 @@ invCont.getInventoryJSON = async (req, res, next) => {
     return res.json(invData)
   } else {
     next(new Error("No data returned"))
+  }
+}
+
+
+
+/* ***************************
+ *  Delete Inventory Item
+ *  Unit 5 Activity
+ * ************************** */
+
+invCont.deleteView = async function (req, res, next) {
+  const inv_id = parseInt(req.params.inv_id)
+  let nav = await utilities.getNav()
+  const itemData = await invModel.getInventoryById(inv_id)
+  const itemName = `${itemData.inv_make} ${itemData.inv_model}`
+  res.render("./inventory/delete", {
+    title: "Delete " + itemName,
+    nav,
+    errors: null,
+    inv_id: itemData.inv_id,
+    inv_make: itemData.inv_make,
+    inv_model: itemData.inv_model,
+    inv_year: itemData.inv_year,
+    inv_description: itemData.inv_description,
+    inv_image: itemData.inv_image,
+    inv_thumbnail: itemData.inv_thumbnail,
+    inv_price: itemData.inv_price,
+    inv_miles: itemData.inv_miles,
+    inv_color: itemData.inv_color,
+    classification_id: itemData.classification_id
+  })
+}
+
+/* ***************************
+ * Show Approval View
+ * ***************************/
+invCont.showApprovalView = async function(req, res) {
+  try {
+      // Assume getUnapprovedClassifications() and getUnapprovedInventoryItemsWithClassification()
+      // are defined elsewhere in invModel
+      const unapprovedClassifications = await invModel.getUnapprovedClassifications();
+      const unapprovedInventoryItems = await invModel.getUnapprovedInventoryItemsWithClassification();
+      const nav = await utilities.getNav();
+      
+      res.render("inventory/approve", {
+          title: "Approve Inventory",
+          nav, // Navigation for UI
+          unapprovedClassifications, // Unapproved classifications
+          unapprovedInventoryItems // Now includes classification names
+      });
+  } catch (error) {
+      console.error("Error loading the approval view:", error);
+      res.status(500).send("Error loading the page.");
+  }
+};
+
+/* ***************************
+* Approve Inventory Item
+* ***************************/
+invCont.approveInventoryItem = async function(req, res) {
+  const invId = req.params.inv_id;
+  if (!invId) {
+      console.log("No inventory item ID provided.");
+      req.flash('error', 'Inventory item not found.');
+      return res.redirect('/inv/approve');
+  }
+
+  try {
+      const itemData = await invModel.getInventoryById(invId);
+      if (!itemData) {
+          req.flash('error', 'Inventory item not found.');
+          return res.redirect('/inv/approve');
+      }
+
+      await invModel.approveInventoryItemById(invId, req.accountData.account_id);
+      req.flash('success', 'Inventory item approved successfully.');
+      res.redirect('/inv/');
+  } catch (error) {
+      console.error("Error during inventory item approval:", error);
+      req.flash('error', 'Failed to approve inventory item.');
+      res.redirect('/inv/approve');
+  }
+};
+
+/* ***************************
+* Approve Classification
+* ***************************/
+invCont.approveClassification = async function(req, res) {
+  const classificationId = req.params.classification_id;
+  try {
+      await invModel.approveClassificationById(classificationId, req.accountData.account_id);
+      req.flash('success', 'Classification approved successfully.');
+      res.redirect('/inv/approve'); // Adjusted redirection for consistency
+  } catch (error) {
+      console.error("Error approving classification:", error);
+      req.flash('error', 'Failed to approve classification.');
+      res.redirect('/inv/approve');
+  }
+};
+// buildClassificationApprovalView
+
+invCont.buildClassificationApprovalView = async function(req, res) {
+  try {
+      const unapprovedClassifications = await invModel.getUnapprovedClassifications();
+      const nav = await utilities.getNav();
+      res.render("inventory/approve-classification", {
+          title: "Approve Classifications",
+          nav,
+          unapprovedClassifications
+      });
+  } catch (error) {
+      console.error("Error loading classification approval view:", error);
+      res.status(500).send("Error loading the page.");
   }
 }
 

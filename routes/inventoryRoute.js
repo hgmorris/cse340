@@ -1,10 +1,11 @@
 // Needed Resources 
 const express = require("express")
-const router = new express.Router() 
+const router = express.Router() 
 const invController = require("../controllers/invController")
 const regValidate = require('../utilities/inventory-validation')
 const utilities = require("../utilities")
 const Util = require("../utilities")
+
 
 // Routes
 
@@ -21,6 +22,11 @@ router.get(
   utilities.checkLogin,utilities.AccountType,utilities.handleErrors(invController.showManagementView)
 )
 
+
+router.get(
+  "/classification-approval",
+  utilities.checkLogin,utilities.AccountType,utilities.handleErrors(invController.buildClassificationApprovalView)
+)
 
 router.get(
   "/add-classification", 
@@ -77,8 +83,17 @@ router.get(
 
 router.post(
   "/delete", 
-  utilities.handleErrors(invController.deleteItem)
+  utilities.handleErrors(invController.deleteItems)
 )
+
+// Route to return inventory by classification as JSON with error handling
+router.get('/approve/classification/:classification_id', utilities.requireAdminOrEmployee, invController.approveClassification);
+
+router.get('/approve', utilities.requireAdminOrEmployee, invController.showApprovalView);
+
+router.get('/approve/inventory/:inv_id', utilities.requireAdminOrEmployee, invController.approveInventoryItem);
+
+
 
   
 

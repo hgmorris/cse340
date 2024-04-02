@@ -168,4 +168,23 @@ validate.checkAccountAccess = async (req, res, next) => {
 };
 
 
+validate.checkUpdateData = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+      req.flash('errors', errors.array());
+      req.flash('formData', req.body);
+      return res.redirect(`/inv/edit/${req.params.inv_id}`);
+  }
+  next();
+};
+
+validate.checkClassificationData = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+      req.flash('errors', errors.array());
+      req.flash('formData', req.body);
+      return res.redirect('/inv/add-classification');
+  }
+  next();
+};
 module.exports = validate;

@@ -10,5 +10,10 @@ const nav = await utilities.getNav()
   res.render("index", {title: "Home", nav})
 }
 
+// baseController.buildAdmin = async function(req, res){
+//   const nav = await utilities.getNav()
+//   res.render("admin", {title: "Admin", nav})
+// }
+
 module.exports = baseController
 

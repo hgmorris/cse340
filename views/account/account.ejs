@@ -5,7 +5,6 @@
 } %>
 
 <%- messages() %>
-
 <!-- Account Error Display -->
 <% if (errors) { %>
     <ul class="notice">
@@ -17,26 +16,30 @@
 
 <h3>You're logged in!</h3>
 
-<div class="account-management">
-  <!-- Display a "Welcome <account_name>" -->
+<!-- Display a "Welcome <account_name>" -->
+<% if (locals.accountData) { %>
   <h2 class="account-welcome">Welcome <%= locals.accountData.account_firstName %></h2>
-
-  <br>
 
   <!-- Edit Account Information - Link -->
   <a title="Edit Account Information" href="/account/editAccount/<%= locals.accountData.account_id %>">Edit Account Information</a>
   <br>
-  
-  <!-- Conditional checks for account type -->
-  <% if (locals.accountData) { %>
-    <% if (locals.accountData.account_type == "Employee" || locals.accountData.account_type == "Admin" ) { %>
-        <h3>Inventory Management</h3>
-        <p><a href="/inv/">Access Inventory Management</a></p>
-    <% } %>    
-  <% } else { %>
-      <p>You must be logged in to view this page.</p>
+
+  <!-- Conditional checks for account type for additional permissions -->
+  <% if (locals.accountData.account_type === "Employee" || locals.accountData.account_type === "Admin") { %>
+      <h3>Inventory Management</h3>
+      <p><a href="/inv/">Access Inventory Management</a></p>
   <% } %>
+
+  <% if (locals.accountData.account_type === "Admin") { %>
+      <h3>Approval Management</h3>
+      <p><a href="/inv/classificationList-approval">Access Approval Management</a></p>
+  <% } %>
+<% } else { %>
+  <p>You must be logged in to view this page.</p>
+<% } %>
+
 </div>
+
 
 
 

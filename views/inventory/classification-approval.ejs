@@ -1,0 +1,48 @@
+
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <%} %>
+    <%- messages() %>
+
+
+<!-- AddClassification Form -->
+<!-- <div class="form-box">
+    <form action="/inv/Unapproved-classification" method="post">
+        <div class="inv-label">
+            <label for="classification_name">Classification Name: </label>
+            <p>Name must be alphabetic characters only.</p>
+            <input id="classification_name" name="add_classification" type="text" placeholder="Classification_Name" 
+                required 
+                value="<%= locals.add_classification %>"
+                pattern="[a-zA-Z]*" > 
+        </div>
+        <br> -->
+        <!-- <input type="hidden" name="status" value="pending"> -->
+        <!-- <button type="submit" class="form-btn">Add Classification</button>
+    </form>
+</div> -->
+
+<!-- An unapproved classification view -->
+
+<!-- <div class="classification">
+    <h2>Classification: <%= classification.classification %></h2>
+    <p>Submitted by: <%= classification.submittedBy %></p>
+    <p>Submission Date: <%= classification.submissionDate %></p>
+    <p>Approval Status: <%= classification.approvalStatus %></p>
+    <p>Approval Comments: <%= classification.approvalComments %></p>
+    <form action="/inv/approve-classification" method="post">
+        <input type="hidden" name="classification_id" value="<%= classification._id %>">
+        <button type="submit" class="form-btn">Approve Classification</button>
+    </form>
+</div> -->
+
+<!-- An approved classification view -->
+
+<!-- <div class="classification">
+    <h2>Classification: <%= classification.classification %></h2>
+    <p>Submitted by: <%= classification.submittedBy %></p>
+    <p>Submission Date: <%= classification.submissionDate %></p>
+    <p>Approval Status: <%= classification.approvalStatus %></p>
+    <p>Approval Comments: <%= classification.approvalComments %></p>
+</div> -->
+

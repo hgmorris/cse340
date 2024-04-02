@@ -2,57 +2,37 @@
 * Build the classification view HTML
 * ************************************ */
 
-const jwt = require("jsonwebtoken")
-require("dotenv").config()
-const invModel = require("../models/inventory-model")
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+const invModel = require("../models/inventory-model");
+// Import the pool object for database queries
+const pool = require("../database");
 const Util = {}
 
+Util.getNav = async function () {
+  try {
+      const data = await invModel.getClassificationsWithApprovedItems();
 
-Util.getNav = async function (req, res, next) {
-  let data = await invModel.getClassifications()
-  let list = `<ul class="navbar">`
-  list += '<li><a href="/" title="Home page">Home</a></li>'
-  data.rows.forEach((row) => {
-    list += "<li>"
-    list +=
-      '<a href="/inv/type/' +
-      row.classification_id +
-      '" title="See our inventory of ' +
-      row.classification_name +
-      ' vehicles">' +
-      row.classification_name +
-      "</a>"
-    list += "</li>"
-  })
-  list += "</ul>"
-  return list
-}
+      let list = "<ul>";
+      list += '<li><a href="/" title="Home page">Home</a></li>';
 
+      data.forEach((row) => {
+          list += `<li><a href="/inv/type/${row.classification_id}" title="See our inventory of ${row.classification_name} vehicles">${row.classification_name}</a></li>`;
+      });
 
-
-Util.getDropdown = async function (selectedClassification = null) {
-  let data = await invModel.getClassifications()
-  let selectList = '<select name="classification_id" id="classificationList" class="select-classification">'
-  selectList += '<option value="" disabled selected>Select a Classification</option>'
-  data.rows.forEach((row) => {
-    let selected = ""
-    if (selectedClassification == row.classification_id) {
-      selected = "selected"
-    }
-    selectList += '<option id="' + row.classification_id + '"  value=' + row.classification_id + ' ' + selected + '>' + row.classification_name + '</option>'
-
-  })
-  selectList += '</select>'
-  return selectList
-}
-
+      list += "</ul>";
+      return list;
+  } catch (error) {
+      console.error("Error generating navigation:", error);
+      return "<ul><li>Error loading navigation</li></ul>";
+  }
+};
 
 Util.buildClassificationGrid = async function(data){
   let grid
   if(data.length > 0){
     grid = '<div class="inv-container" id="inv-display">'
       data.forEach(vehicle => { 
-        
             grid +='<div class="inv-card">'
 
             grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id 
@@ -203,25 +183,25 @@ Util.checkJWTToken = (req, res, next) => {
 /* ****************************************
  *  Check Login
  * ************************************ */
-Util.checkLogin = (req, res, next) => {
-  console.log("Checking login", res.locals)
-  if (res.locals.loggedIn) {
-    next()
+// Util.checkLogin = (req, res, next) => {
+//   console.log("Checking login", res.locals)
+//   if (res.locals.loggedIn) {
+//     next()
+//   } else {
+//     req.flash("notice", "Please log in.")
+//     return res.redirect("/account/login")
+//   }
+//  }
+
+
+ Util.requireAdminOrEmployee = (req, res, next) => {
+  if (res.locals.loggedin && (res.locals.accountData.account_type === 'Employee' || res.locals.accountData.account_type === 'Admin')) {
+      next();
   } else {
-    req.flash("notice", "Please log in.")
-    return res.redirect("/account/login")
+      req.flash('error', 'You must be logged in as an Employee or Admin to access this page.');
+      res.redirect('/account/login');
   }
- }
-
-
-Util.AccountType = async function (req, res, next) {
-      if (res.locals.accountData.account_type === 'Employee' || res.locals.accountData.account_type === 'Admin' ) { 
-      next()
-      } else {
-        req.flash("notice", "You don\'t have permission for this route")
-        res.redirect("/account/login")
-      }
-    } 
+};
 
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
 
