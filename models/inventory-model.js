@@ -4,109 +4,66 @@ const pool = require("../database/");
 // Retrieves all classification data, ordered by classification name
 async function getClassifications() {
   try {
-    return await pool.query("SELECT * FROM public.classification ORDER BY classification_name");
+    return await pool.query("SELECT * FROM public.classification  WHERE classification_approved = true ORDER BY classification_name");
   } catch (error) {
     // Throws an error with a specific message if the query fails
     throw new Error(`Error getting classifications: ${error.message}`);
   }
 }
 
-async function getUnapprovedClassifications() {
-  const query = "SELECT * FROM classification WHERE classification_approved = false";
-  try {
-      const result = await pool.query(query);
-      return result.rows;
-  } catch (err) {
-      console.error(err);
-      throw err;
-  }
-}
-async function getUnapprovedInventoryItems() {
-  const query = "SELECT * FROM inventory WHERE inv_approved = false";
-  try {
-      const result = await pool.query(query);
-      return result.rows;
-  } catch (err) {
-      console.error(err);
-      throw err;
-  }
-}
+// Get Pending Classifications
 
-async function getClassificationsWithApprovedItems() {
-  const query = `
-      SELECT DISTINCT c.classification_id, c.classification_name 
-      FROM classification c
-      INNER JOIN inventory i ON c.classification_id = i.classification_id 
-      WHERE c.classification_approved = true AND i.inv_approved = true
-      ORDER BY c.classification_name`;
+// async function getPendingClassifications() {
+//   try {
+//     return await pool.query("SELECT * FROM public.classification  WHERE classification_approved = false ");
+//   } catch (error) {
+//     // Throws an error with a specific message if the query fails
+//     throw new Error(`Error getting classifications: ${error.message}`);
+//   }
+// }
+
+async function getPendingClassifications() {
   try {
-      const result = await pool.query(query);
-      return result.rows;
-  } catch (err) {
-      console.error("Error fetching classifications with approved items: ", err);
-      throw err;
-  }
-}
-
-async function getUnapprovedInventoryItemsWithClassification() {
-  const query = `
-      SELECT i.*, c.classification_name 
-      FROM inventory i
-      JOIN classification c ON i.classification_id = c.classification_id 
-      WHERE i.inv_approved = false
-      ORDER BY c.classification_name, i.inv_make, i.inv_model`;
-  try {
-      const result = await pool.query(query);
-      return result.rows;
-  } catch (err) {
-      console.error("Error fetching unapproved inventory items with classification: ", err);
-      throw err;
-  }
-}
-
-async function approveInventoryItemById(invId, accountId) {
-  const query = `
-      UPDATE inventory
-      SET inv_approved = true, account_id = $2, in_approved_date = NOW()
-      WHERE inv_id = $1
-      RETURNING *`;
-  try {
-      const result = await pool.query(query, [invId, accountId]);
-      return result.rows[0]; 
-  } catch (err) {
-      console.error("Error approving inventory item by ID:", err);
-      throw err;
-  }
-}
-
-
-async function approveClassificationById(classificationId, accountId) {
-  const query = `
-      UPDATE classification 
-      SET classification_approved = TRUE, 
-          account_id = $2, 
-          classification_approval_date = NOW()
-      WHERE classification_id = $1
-      RETURNING *;`;
-
-  try {
-      const res = await pool.query(query, [classificationId, accountId]);
-      return res.rows[0];
-  } catch (err) {
-      console.error("Error approving classification by ID:", err);
-      throw err;
-  }
-}
-
-async function getApprovedClassifications() {
-  try {
-      const result = await pool.query("SELECT * FROM classification WHERE is_approved = TRUE ORDER BY classification_name");
-      return result.rows;
+    const data = await pool.query(`
+      SELECT *
+      FROM public.classification
+      WHERE classification_approved = false
+    `);
+    // console.log(data);
+    return data.rows;
   } catch (error) {
-      console.error("Error fetching approved classifications:", error);
-      throw error;
+    throw new Error('Error retrieving unapproved classifications: ' + error.message);
   }
 }
+
+
+
+
+// Get all Unapproved Classifications
+// async function classificationPendingApproval() {
+//   const query = `
+//   SELECT c.classification_id, c.classification_name
+//   FROM public.classification c
+//   WHERE c.classification_approved = false
+//   ORDER BY c.classification_name
+//   `
+//   return await pool.query(query)
+// }
+
+// Get all Unapproved Inventory Items
+async function getUnapprovedInventoryItems() {
+  const query = `
+  SELECT i.inv_id, i.inv_make, i.inv_model, i.inv_year, i.inv_description,
+   i.inv_image, i.inv_thumbnail, i.inv_price, i.inv_miles, i.inv_color, i.classification_id
+  FROM public.inventory i
+  WHERE i.inv_approved = false
+  ORDER BY i.inv_make, i.inv_model
+  `
+  return await pool.query (query) 
+}
+
+
+
 // Retrieves data for a specific vehicle by vehicle ID
 async function getInventoryById(vehicle_id) {
   try {
@@ -164,6 +121,7 @@ async function updateInventory(inv_id, inv_make, inv_model, inv_description, inv
   }
 }
 
+
 // Deletes an inventory item based on its inventory ID
 async function deleteInventoryItem(inv_id) {
   try {
@@ -177,19 +135,16 @@ async function deleteInventoryItem(inv_id) {
 
 // Exporting functions to be available for use in other files
 module.exports = {
-  getClassifications, 
-  getUnapprovedInventoryItems, 
+  getClassifications,  
   getInventoryById,
   addClassification,
   checkExistingClassification,
   addInventory,
   updateInventory,
   deleteInventoryItem,
-  approveInventoryItemById,
-  approveClassificationById,
-  getClassificationsWithApprovedItems,
-  getUnapprovedClassifications,
-  getUnapprovedInventoryItemsWithClassification,
-  getApprovedClassifications
+  // classificationPendingApproval,
+  getUnapprovedInventoryItems,
+  getPendingClassifications,
 };
+
 

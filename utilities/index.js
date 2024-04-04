@@ -9,9 +9,11 @@ const invModel = require("../models/inventory-model");
 const pool = require("../database");
 const Util = {}
 
-Util.getNav = async function () {
+Util.getNav = async function ( req, res, next) {
   try {
-      const data = await invModel.getClassificationsWithApprovedItems();
+      const result = await invModel.getClassifications();
+      const data = result.rows;
+
 
       let list = "<ul>";
       list += '<li><a href="/" title="Home page">Home</a></li>';
@@ -27,6 +29,62 @@ Util.getNav = async function () {
       return "<ul><li>Error loading navigation</li></ul>";
   }
 };
+
+/* ************************
+* Constructs the classification select HTML
+************************** */
+Util.getDropdown = async function (classification_id = null) {
+  let data = await invModel.getClassifications()
+  let list = `<select name="classification_id" id="classification_id" required>`
+  list += `<option value=''>Choose a Classification</option>`
+  data.rows.forEach((row) => {
+    list += `<option value=${row.classification_id} `
+    if(classification_id != null && row.classification_id == classification_id){
+      list+= " selected "
+      isSelected = ""
+    }
+    list += `>${row.classification_name}</option>`
+  })
+  list += '</select>'
+  return list
+}
+
+
+/* ************************
+* Constructs the unapproved classification Table
+************************** */
+Util.getUnapprovedClassifications = async function () {
+  let data = await invModel.getPendingClassifications();
+  let classificationTable = '<table border = "1">';
+  classificationTable += "<tr><th>Classification Name</th><th>Action</th></tr>";
+  data.forEach((row) => {
+    classificationTable += "<tr>";
+    classificationTable += `<td>${row.classification_name}</td>`;
+    classificationTable += `<td><a href="/inv/classificationApproval/${row.classification_id}">Approve</a></td>`;
+    classificationTable += "</tr>";
+  });
+  classificationTable += "</table>";
+  return classificationTable;
+}
+
+
+/* ************************
+* Inventory Items pending approvals
+************************** */
+Util.getUnapprovedInventoryItems = async function () {
+  let data = await invModel.getUnapprovedInventoryItems()
+  let inventoryTable = '<table border = "1">'
+  inventoryTable += "<tr><th>Make</th><th>Model</th><th>Action</th></tr>";
+  data.rows.forEach((row) => {
+    inventoryTable += "<tr>";
+    inventoryTable += `<td>${row.inv_make}</td>`;
+    inventoryTable += `<td>${row.inv_model}</td>`;
+    inventoryTable += `<td><a href="/inv/inventoryApproval${row.inv_id}">Approve</a></td>`;
+    inventoryTable += "</tr>";
+  });
+  return inventoryTable += "</table>";
+
+}
 
 Util.buildClassificationGrid = async function(data){
   let grid
@@ -180,29 +238,44 @@ Util.checkJWTToken = (req, res, next) => {
   }
 }
 
-/* ****************************************
- *  Check Login
- * ************************************ */
-// Util.checkLogin = (req, res, next) => {
-//   console.log("Checking login", res.locals)
-//   if (res.locals.loggedIn) {
-//     next()
-//   } else {
-//     req.flash("notice", "Please log in.")
-//     return res.redirect("/account/login")
-//   }
-//  }
-
-
- Util.requireAdminOrEmployee = (req, res, next) => {
-  if (res.locals.loggedin && (res.locals.accountData.account_type === 'Employee' || res.locals.accountData.account_type === 'Admin')) {
-      next();
+Util.checkLogin = (req, res, next) => {
+  console.log("Checking login", res.locals)
+  if (res.locals.loggedIn) {
+    next()
   } else {
-      req.flash('error', 'You must be logged in as an Employee or Admin to access this page.');
-      res.redirect('/account/login');
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
   }
-};
+ }
+
+
+
+
+ // function to check if the user is an admin or employee
+  Util.requireAdminOrEmployee = (req, res, next) => {
+    if (res.locals.loggedIn && (res.locals.accountData.account_type === "Admin" || res.locals.accountData.account_type === "Employee")) {
+      next()
+    } else {
+      req.flash("error", "You must be logged in as an Admin or Employee to access this page.")
+      res.redirect("/account/login")
+    }
+  }
+
+  // function to check if the user is an admin
+  Util.requireAdmin = (req, res, next) => {
+    if (res.locals.loggedIn && res.locals.accountData.account_type === "Admin") {
+      next()
+    } else {
+      req.flash("error", "You must be logged in as an Admin to access this page.")
+      res.redirect("/account/login")
+    }
+  }
+
+
+
+
 
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+
 
 module.exports = Util

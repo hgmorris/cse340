@@ -1,100 +1,44 @@
-// Needed Resources 
-const express = require("express")
-const router = express.Router() 
-const invController = require("../controllers/invController")
-const regValidate = require('../utilities/inventory-validation')
-const utilities = require("../utilities")
-const Util = require("../utilities")
+const express = require("express");
+const router = express.Router();
+const invController = require("../controllers/invController");
+const { classificationRules, inventoryRules, checkClassificationData, checkInventoryData, checkUpdateData } = require('../utilities/inventory-validation');
+const utilities = require("../utilities");
 
+// Route to build inventory by classification ID
+router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
 
-// Routes
+// Route to build vehicle details by vehicle ID
+router.get("/detail/:vehicleId", utilities.handleErrors(invController.buildByVehicleId));
 
-router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId)
-)
-router.get( "/detail/:vehicleId", utilities.handleErrors(invController.BuildByVehicleId)
-)
+// Route to return inventory by classification as JSON
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON));
 
-router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+// Route for the main management view
+router.get("/", utilities.checkLogin, utilities.handleErrors(invController.showManagementView));
 
+// Route for building the classification approval view
+router.get("/classification-approval", utilities.checkLogin, utilities.handleErrors(invController.buildClassificationApprovalView));
 
-router.get(
-  "/",
-  utilities.checkLogin,utilities.AccountType,utilities.handleErrors(invController.showManagementView)
-)
+// Route for adding a new classification - GET and POST
+router.get("/add-classification", utilities.handleErrors(invController.buildAddClassification));
+router.post("/add-classification", classificationRules(), checkClassificationData, utilities.handleErrors(invController.addNewClassification));
 
+// Route for adding a new inventory item - GET and POST
+router.get("/add-inventory", utilities.handleErrors(invController.buildAddInventory));
+router.post("/add-inventory", inventoryRules(), checkInventoryData, checkClassificationData, utilities.handleErrors(invController.addNewInventory));
 
-router.get(
-  "/classification-approval",
-  utilities.checkLogin,utilities.AccountType,utilities.handleErrors(invController.buildClassificationApprovalView)
-)
+// Route for editing an inventory item
+router.get("/edit/:inv_id", utilities.handleErrors(invController.editInventoryView));
 
-router.get(
-  "/add-classification", 
-  utilities.handleErrors(invController.BuildAddClassification)
-  )
+// Route for updating an inventory item
+router.post("/update/", inventoryRules(), checkUpdateData, checkClassificationData, utilities.handleErrors(invController.updateInventory));
 
+// Route for deleting an inventory item
+router.get("/delete/:inv_id", utilities.handleErrors(invController.deleteView));
+// Ensure this matches the controller's method if it's different. You might need a POST route here if your application supports deleting via POST.
 
-
-router.post(
-    "/add-classification",
-    regValidate.classificationRules(),
-    regValidate.checkClassificationData,
-    utilities.handleErrors(invController.AddNewClassification)
-)
-
-
-router.get(
-  "/add-inventory", 
-  utilities.handleErrors(invController.BuildAddInventory)
-  )
-
-router.get(
-  "/getInventory/:classification_id",
-  utilities.handleErrors(invController.getInventoryJSON)
-)
-
-router.post(
-  "/add-inventory",
-  regValidate.inventoryRules(),
-  regValidate.checkInventoryData,
-  regValidate.checkClassificationData,
-  utilities.handleErrors(invController.AddNewInventory)  
-)
-
-
-router.get(
-  "/edit/:inv_id",
-  utilities.handleErrors(invController.editInventoryView)
-)
-
-router.post(
-  "/update/", 
-  regValidate.inventoryRules(),
-  regValidate.checkUpdateData,
-  regValidate.checkClassificationData,
-  utilities.handleErrors(invController.updateInventory)
-)
-
-
-router.get(
-  "/delete/:inv_id",
-  utilities.handleErrors(invController.deleteView)
-)
-
-router.post(
-  "/delete", 
-  utilities.handleErrors(invController.deleteItems)
-)
-
-// Route to return inventory by classification as JSON with error handling
-router.get('/approve/classification/:classification_id', utilities.requireAdminOrEmployee, invController.approveClassification);
-
-router.get('/approve', utilities.requireAdminOrEmployee, invController.showApprovalView);
-
-router.get('/approve/inventory/:inv_id', utilities.requireAdminOrEmployee, invController.approveInventoryItem);
-
-
-
-  
+// Routes for approval processes
+router.get("/classificationList-approval",utilities.requireAdminOrEmployee, invController.showClassificationListApproval);
 
 module.exports = router;
+

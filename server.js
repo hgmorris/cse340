@@ -86,21 +86,12 @@ app.use("/inv", utilities.handleErrors(require("./routes/inventoryRoute")))
 // Route for admin to view unapproved classifications and inventory items
 app.get("/admin/unapproved", utilities.handleErrors(baseController.buildAdmin))
 
-// JavaScript (Express.js)
+// Route for admin to approve classifications and inventory items
+app.post("/admin/approve", utilities.handleErrors(baseController.approveItems))
 
-app.get('/account', async (req, res) => {
-  try {
-    // Get account data and classification list from the database
-    const accountData = await getAccountData(req.user.id); // replace with your function
-    const classificationList = await getClassificationList(); // replace with your function
 
-    // Render the account view with the account data and classification list
-    res.render('account', { accountData, classificationList });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('An error occurred');
-  }
-});
+
+
 
 
 
