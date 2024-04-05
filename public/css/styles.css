@@ -565,6 +565,43 @@ select:focus {
   transform: translateY(-2px); 
 }
 
+.unapproved-section {
+  margin-bottom: 20px;
+}
+.unapproved-section h2 {
+  margin-bottom: 10px;
+}
+
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: turquoise;
+}
+
+th, td {
+  border: 1px solid #DDDDDD; 
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #F2F2F2; 
+}
+
+tr:nth-child(even) {
+  background-color: #F9F9F9; 
+}
+
+h1, h2 {
+  color: #333333; 
+}
+
+section {
+  margin-bottom: 20px;
+}
 
 
 

@@ -105,22 +105,6 @@ async function getUnapprovedInventoryItems() {
   }
 }
 
-// async function getClassificationsWithApprovedItems() {
-//   const query = `
-//       SELECT DISTINCT c.classification_id, c.classification_name 
-//       FROM classification c
-//       INNER JOIN inventory i ON c.classification_id = i.classification_id 
-//       WHERE c.classification_approved = true AND i.inv_approved = true
-//       ORDER BY c.classification_name`;
-//   try {
-//       const result = await pool.query(query);
-//       return result.rows;
-//   } catch (err) {
-//       console.error("Error fetching classifications with approved items: ", err);
-//       throw err;
-//   }
-// }
-
 async function getClassificationsWithApprovedItems() {
   const query = `
       SELECT DISTINCT c.classification_id, c.classification_name 
@@ -201,6 +185,22 @@ async function getApprovedClassifications() {
 }
 
 
+
+async function getInventoryByClassificationId(classification_id) {
+  try {
+    const data = await pool.query("SELECT * FROM public.inventory WHERE classification_id = $1", [classification_id]);
+    return data.rows;
+  }
+  catch (error) {
+    throw new Error(`Error getting inventory by classification ID: ${error.message}`);
+  }
+}
+
+
+
+
+
+
 // Exporting functions to be available for use in other files
 module.exports = {
   getClassifications,  
@@ -217,6 +217,7 @@ module.exports = {
   approveInventoryItemById,
   approveClassificationById,
   approveInventoryItem,
-  getApprovedClassifications 
+  getApprovedClassifications,
+  getInventoryByClassificationId
 };
 
