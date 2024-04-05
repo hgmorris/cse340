@@ -38,7 +38,17 @@ router.get("/delete/:inv_id", utilities.handleErrors(invController.deleteView));
 // Ensure this matches the controller's method if it's different. You might need a POST route here if your application supports deleting via POST.
 
 // Routes for approval processes
-router.get("/classificationList-approval",utilities.requireAdminOrEmployee, invController.showClassificationListApproval);
+
+// Route to return inventory by classification as JSON with error handling
+router.get('/approve/classification/:classification_id', utilities.requireAdminOrEmployee, invController.approveClassification);
+
+
+// Route to show the approval view
+router.get('/approve', utilities.requireAdminOrEmployee, invController.showApprovalView);
+
+
+router.get('/approve/inventory/:inv_id', utilities.requireAdminOrEmployee, invController.approveInventoryItem);
+
 
 module.exports = router;
 

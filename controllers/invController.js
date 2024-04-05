@@ -2,6 +2,8 @@ const invModel = require("../models/inventory-model");
 const utilities = require("../utilities/");
 const { validationResult } = require("express-validator");
 
+
+
 const invController = {};
 
 // Build inventory by classification ID
@@ -183,21 +185,21 @@ invController.updateInventory = async (req, res, next) => {
 
 
 // show classification Approval list
-invController.showClassificationListApproval = async (req, res, next) => {
-  try {
-    const nav = await utilities.getNav();
-    const pendingClassifications = await invModel.getPendingClassifications();
-    console.log("pendingClassifications",pendingClassifications);
-    res.render("inventory/classification-approval", {
-      title: "Classification Approval",
-      nav,
-      pendingClassifications,
-      errors: null,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+// invController.showClassificationListApproval = async (req, res, next) => {
+//   try {
+//     const nav = await utilities.getNav();
+//     const pendingClassifications = await invModel.getPendingClassifications();
+//     console.log("pendingClassifications",pendingClassifications);
+//     res.render("inventory/classification-approval", {
+//       title: "Classification Approval",
+//       nav,
+//       pendingClassifications,
+//       errors: null,
+//     });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 
 
@@ -234,42 +236,119 @@ invController.deleteView = async (req, res, next) => {
   }
 };
 
-// Show approval view for inventory and classifications
-invController.showApprovalView = async (req, res, next) => {
+/* ***************************
+ *  Show Approval View
+ * ************************** */
+invController.showApprovalView = async function(req, res) {
   try {
-    const nav = await utilities.getNav();
-    // Assuming methods for fetching unapproved items exist
-    const pendingClassifications = await utilities.getPendingClassifications();
-    // const unapprovedInventoryItems = await invModel.getUnapprovedInventoryItems();
-    res.render("inventory/classification-approval", {
-      title: "Approve Items",
-      nav,
-      pendingClassifications,
-      errors: null,
-    });
+      // Assume getUnapprovedClassifications() is defined elsewhere in invModel
+      let unapprovedClassifications = await invModel.getUnapprovedClassifications();
+      
+      // Use the new function that includes classification names
+      let unapprovedInventoryItems = await invModel.getUnapprovedInventoryItemsWithClassification();
+      
+      let nav = await utilities.getNav(); 
+      res.render("inventory/classification-approval", {
+          title: "Approve Inventory",
+          nav,
+          unapprovedClassifications, 
+          unapprovedInventoryItems // Now includes classification names
+      });
   } catch (error) {
-    next(error);
+      console.error("Error loading the approval view:", error);
+      res.status(500).send("Error loading the page.");
   }
 };
 
 
-// Inventory items Pending Approval
-invController.showInventoryApproval = async (req, res, next) => {
+invController.approveInventoryItem = async function(req, res) {
+  const invId = req.params.inv_id;
+  if (!invId) {
+      console.log("No inventory item ID provided.");
+      req.flash('error', 'Inventory item not found.');
+      return res.redirect('/inv/approve');
+  }
+
+  console.log("Approving inventory item with ID:", invId);
+
   try {
-    const nav = await utilities.getNav();
-    const pendingInventory = await invModel.getPendingInventory();
-    res.render("inventory/inventory-approval", {
-      title: "Inventory Approval",
-      nav,
-      pendingInventory,
-      errors: null,
-    });
+      const itemData = await invModel.getInventoryById(invId);
+      if (!itemData) {
+          req.flash('error', 'Inventory item not found.');
+          return res.redirect('/inv/approve');
+      }
+
+      await invModel.approveInventoryItemById(invId, res.locals.accountData.account_id);
+
+      req.flash('success', 'Inventory item approved successfully.');
+      res.redirect('/inv/');
   } catch (error) {
-    next(error);
+      console.error("Error during inventory item approval:", error);
+      req.flash('error', 'Failed to approve inventory item.');
+      res.redirect('/inv/approve');
   }
 };
 
+invController.approveClassification = async function(req, res) {
+  const classificationId = req.params.classification_id;
+  try {
+      // Assuming invModel has a method called approveClassificationById that updates classification_approved to true
+      await invModel.approveClassificationById(classificationId, req.accountData.account_id); // Log the admin's ID
+      
+      req.flash('success', 'Classification approved successfully.');
+      res.redirect('/inv/approve'); // Redirect back to the approval page
+  } catch (error) {
+      console.error("Error approving classification:", error);
+      req.flash('error', 'Failed to approve classification.');
+      res.redirect('/inv/approve'); // Redirect back to the approval page with an error message
+  }
+};
 
+invController.approveClassification = async function(req, res) {
+  const classificationId = req.params.classification_id; // Ensure this matches the route parameter
+  try {
+    console.log("res.accountData",res.locals.accountData);
+      await invModel.approveClassificationById(classificationId, res.locals.accountData.account_id); // Assuming this function exists and works as intended
+      req.flash('success', 'Classification approved successfully.');
+      res.redirect('/account'); // Assuming you want to redirect here
+  } catch (error) {
+      console.error("Error approving classification:", error);
+      req.flash('error', 'Failed to approve classification.');
+      res.redirect('/inv/approve'); // Assuming you want to redirect back in case of failure
+  }
+};
+
+invController.addInventoryItem = async function(req, res) {
+  try {
+      // Extract data from request body
+      const { make, model, year, description, image_path, thumbnail_path, price, miles, color, classification_id } = req.body;
+
+      // Call your model function to add the inventory item
+      await invModel.addInventoryItem({
+          inv_make: make,
+          inv_model: model,
+          inv_year: year,
+          inv_description: description,
+          inv_image: image_path,
+          inv_thumbnail: thumbnail_path,
+          inv_price: price,
+          inv_miles: miles,
+          inv_color: color,
+          classification_id
+      });
+
+      // Set a success message
+      req.flash('success', 'Inventory item added successfully.');
+      // Redirect to the account page
+      res.redirect('/account');
+  } catch (error) {
+      console.error("Failed to add inventory item:", error);
+      // Set an error message
+      req.flash('error', 'Failed to add inventory item.');
+      // Redirect back to the approval page (or wherever the form is located)
+      res.redirect('/inv/approve');
+  }
+};
 
 
 module.exports = invController;

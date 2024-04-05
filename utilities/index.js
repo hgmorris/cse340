@@ -9,25 +9,23 @@ const invModel = require("../models/inventory-model");
 const pool = require("../database");
 const Util = {}
 
-Util.getNav = async function ( req, res, next) {
-  try {
-      const result = await invModel.getClassifications();
-      const data = result.rows;
+Util.getNav = async function () {
+    try {
+        const data = await invModel.getClassificationsWithApprovedItems();
 
+        let list = "<ul>";
+        list += '<li><a href="/" title="Home page">Home</a></li>';
 
-      let list = "<ul>";
-      list += '<li><a href="/" title="Home page">Home</a></li>';
+        data.forEach((row) => {
+            list += `<li><a href="/inv/type/${row.classification_id}" title="See our inventory of ${row.classification_name} vehicles">${row.classification_name}</a></li>`;
+        });
 
-      data.forEach((row) => {
-          list += `<li><a href="/inv/type/${row.classification_id}" title="See our inventory of ${row.classification_name} vehicles">${row.classification_name}</a></li>`;
-      });
-
-      list += "</ul>";
-      return list;
-  } catch (error) {
-      console.error("Error generating navigation:", error);
-      return "<ul><li>Error loading navigation</li></ul>";
-  }
+        list += "</ul>";
+        return list;
+    } catch (error) {
+        console.error("Error generating navigation:", error);
+        return "<ul><li>Error loading navigation</li></ul>";
+    }
 };
 
 /* ************************
@@ -53,38 +51,8 @@ Util.getDropdown = async function (classification_id = null) {
 /* ************************
 * Constructs the unapproved classification Table
 ************************** */
-Util.getUnapprovedClassifications = async function () {
-  let data = await invModel.getPendingClassifications();
-  let classificationTable = '<table border = "1">';
-  classificationTable += "<tr><th>Classification Name</th><th>Action</th></tr>";
-  data.forEach((row) => {
-    classificationTable += "<tr>";
-    classificationTable += `<td>${row.classification_name}</td>`;
-    classificationTable += `<td><a href="/inv/classificationApproval/${row.classification_id}">Approve</a></td>`;
-    classificationTable += "</tr>";
-  });
-  classificationTable += "</table>";
-  return classificationTable;
-}
 
 
-/* ************************
-* Inventory Items pending approvals
-************************** */
-Util.getUnapprovedInventoryItems = async function () {
-  let data = await invModel.getUnapprovedInventoryItems()
-  let inventoryTable = '<table border = "1">'
-  inventoryTable += "<tr><th>Make</th><th>Model</th><th>Action</th></tr>";
-  data.rows.forEach((row) => {
-    inventoryTable += "<tr>";
-    inventoryTable += `<td>${row.inv_make}</td>`;
-    inventoryTable += `<td>${row.inv_model}</td>`;
-    inventoryTable += `<td><a href="/inv/inventoryApproval${row.inv_id}">Approve</a></td>`;
-    inventoryTable += "</tr>";
-  });
-  return inventoryTable += "</table>";
-
-}
 
 Util.buildClassificationGrid = async function(data){
   let grid
@@ -247,7 +215,6 @@ Util.checkLogin = (req, res, next) => {
     return res.redirect("/account/login")
   }
  }
-
 
 
 
