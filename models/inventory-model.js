@@ -196,6 +196,42 @@ async function getInventoryByClassificationId(classification_id) {
   }
 }
 
+// Add a new inventory item to the database
+
+async function addInventoryItem(inventoryData) {
+  try {
+    const result = await pool.query(
+      `INSERT INTO public.inventory (
+        inv_make,
+        inv_model,
+        inv_year,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_miles,
+        inv_color,
+        classification_id
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
+      [
+        inventoryData.inv_make,
+        inventoryData.inv_model,
+        inventoryData.inv_year,
+        inventoryData.inv_description,
+        inventoryData.inv_image,
+        inventoryData.inv_thumbnail,
+        inventoryData.inv_price,
+        inventoryData.inv_miles,
+        inventoryData.inv_color,
+        inventoryData.classification_id
+      ]
+    );
+    return result.rows[0]; 
+  } catch (error) {
+    console.error("Error adding inventory item:", error);
+    throw error; 
+  }
+}
 
 
 
@@ -218,6 +254,7 @@ module.exports = {
   approveClassificationById,
   approveInventoryItem,
   getApprovedClassifications,
-  getInventoryByClassificationId
+  getInventoryByClassificationId,
+  addInventoryItem
 };
 

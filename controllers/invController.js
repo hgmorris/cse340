@@ -184,27 +184,6 @@ invController.updateInventory = async (req, res, next) => {
 
 
 
-// show classification Approval list
-// invController.showClassificationListApproval = async (req, res, next) => {
-//   try {
-//     const nav = await utilities.getNav();
-//     const pendingClassifications = await invModel.getPendingClassifications();
-//     console.log("pendingClassifications",pendingClassifications);
-//     res.render("inventory/classification-approval", {
-//       title: "Classification Approval",
-//       nav,
-//       pendingClassifications,
-//       errors: null,
-//     });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
-
-
-
-
 // Get inventory by classification in JSON format
 invController.getInventoryJSON = async (req, res, next) => {
   try {
@@ -259,6 +238,10 @@ invController.showApprovalView = async function(req, res) {
       res.status(500).send("Error loading the page.");
   }
 };
+
+
+
+
 
 
 invController.approveInventoryItem = async function(req, res) {
